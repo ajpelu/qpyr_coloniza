@@ -1,0 +1,54 @@
+---
+title: "schema"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library("DiagrammeR")
+```
+
+```{r}
+mermaid('
+graph TD
+
+  a(info_replicates_transects.csv)
+  b[preparaData_transectos.R]
+  c(transectos_crops.csv)
+  d(aux_ajpelu_cultivos_56.shp) 
+  e[generaTabla_descriptivos_crops.R]
+  f(age_cultivos.csv)
+  g(tabla_descriptivos_crops.csv)
+  h(migrame_observations.csv)
+  i[preparaData_clasifica_trees.R]
+  j(tree_data_crops.csv)
+  k[compute_abundances.R]
+  l(abundance_tree_class.csv)
+  m(abundance_size_class.csv)
+
+  a-->b
+  b-->|Assign crop code|c
+  d-->|Assign crop code|e
+  c-->e
+  f-->e
+  e-->|Compute n transects by crops<br>Get min, max elevation|g
+  h-->|Filter NA data<br>Select data for crops transects<br>Classify trees into juvenile, adult<br>Classify trees by size|i
+  c-->i
+  i-->j
+  j-->k
+
+  subgraph Compute Abundances
+  k-->|"by tree class (seedling, sapling, etc)"|l
+  k-->|"by size class (30,90, ...)"|m
+  end
+
+  classDef clasecsv fill:#f96
+  class a,c,f,g,h,j,l,m clasecsv
+
+  classDef proceso fill:#ededed,stroke:#333
+  class b,e,i,k proceso
+')
+```
+
+
