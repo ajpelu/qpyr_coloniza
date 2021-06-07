@@ -1,0 +1,6 @@
+loc,loc_code,crop_code,age_range,age,code,cultivo,subtipo
+Robledal de Cáñar,CA,CA1,> 60 ,65,CLARO1,CULT_1,CLARO1
+Robledal de Cáñar,CA,CA2,< 30,25,CLARO2,CULT_2,CLARO2
+Robledal de Cáñar,CA,CA3,40 - 60,50,CLARO3,CULT_3,CLARO3
+Robledal de San Juan,SJ,SJ1,40 - 60,50,CLARO1,CULT_1,CL1
+Robledal de San Juan,SJ,SJ2,30 - 40,35,CLARO2,CULT_2,CL2
