@@ -1,0 +1,265 @@
+---
+title: "Compare Forest Structure"
+output: 
+  github_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(here)
+library(knitr)
+library(kableExtra)
+library(ggstatsplot)
+library(statsExpressions)
+library(plotrix) #std.error 
+```
+
+
+```{r}
+# Select data from forest
+# Remove data without values in altura field
+forest <- read_csv("data/tree_data_crops.csv") %>% 
+  filter(tipo == 'ROBLEDAL') %>% 
+  filter(!is.na(altura))  
+```
+
+
+- Analisis no paramétrico para cada variable dependiente 
+
+- variables dependientes: 
+
+  - [] abundancia total 
+  - [] composicion (% de Q. pyrenaica)
+  - [] abundancia de juveniles
+  - [] media, mediana, max tree heigth 
+  - [] BA (m2/ha)
+
+
+```{r, prepareData}
+# composition and abundance (ind /ha)
+composition <- forest %>% 
+  group_by(crop_code, localidad, especie, nombre) %>% 
+  count() %>% 
+  pivot_wider(names_from = especie, values_from = n) %>% 
+  rowwise() %>% 
+  mutate(ntotal = sum(encina,roble, na.rm = TRUE),
+         per_qp = round(roble/ntotal*100, 2), 
+         per_qi = ifelse(
+           is.na(encina), 0, 
+           round(encina/ntotal*100, 2)), 
+         abundance = round(ntotal * 10000/300, 2)) 
+
+# abundance Qp (ind/ha)
+ab <- forest %>% 
+  group_by(crop_code, localidad, especie, nombre, tree_type) %>% 
+  count() %>% 
+  mutate(n = n*10000/300) %>% 
+  pivot_wider(names_from = tree_type, values_from = n) 
+
+ab_roble <- ab %>% filter(especie=="roble") %>% 
+  mutate(ab_juvenile = replace_na(juvenile, 0),
+         ab_adult = replace_na(adult, 0)) %>% 
+  dplyr::select(-juvenile, -adult,  -especie)
+
+# height
+tree_height <- forest %>% 
+  filter(especie == "roble") %>% 
+  group_by(crop_code, localidad, nombre) %>% 
+  summarise(tree_height_max = max(altura, na.rm = TRUE)/100,
+            tree_height_mean = mean(altura, na.rm = TRUE)/100,
+            tree_height_median = median(altura, na.rm = TRUE)/100,
+            tree_height_q75 = quantile(altura, 0.75)/100,
+            tree_height_q90 = quantile(altura, 0.9)/100)
+
+
+# BASAL AREA (m2/ha)
+ba <- forest %>% 
+  filter(especie == "roble") %>% 
+  # filter(tree_type == "adult") %>% 
+  mutate(ba_tree = (pi*diametro_base*diametro_base)/40000) %>% 
+  group_by(crop_code, localidad, nombre) %>% 
+  summarise(ba = ((sum(ba_tree))*10000)/300)
+
+forest_str <- composition %>% 
+  dplyr::select(crop_code, localidad, nombre, per_qp, abundance) %>% 
+  inner_join(ab_roble) %>% 
+  inner_join(tree_height) %>% 
+  inner_join(ba) %>% 
+  dplyr::select(-especie)
+
+
+write_csv(forest_str, "data/forest_structure.csv")
+```
+
+
+# Summary by locality
+```{r}
+ml <- forest_str %>% 
+  group_by(localidad) %>% 
+  summarise_at(vars(per_qp:ba), .funs = mean) %>% 
+  pivot_longer(per_qp:ba, names_to = "variable", values_to = "mean") 
+
+sl <- forest_str %>% 
+  group_by(localidad) %>% 
+  summarise_at(vars(per_qp:ba), .funs = std.error) %>% 
+  pivot_longer(per_qp:ba, names_to = "variable", values_to = "se") 
+
+statby_localidad <- ml %>% dplyr::inner_join(sl) %>% 
+  mutate(across(where(is.numeric), round, 2)) %>% 
+  unite("value", mean:se, sep=" ± ")
+
+# Apply test 
+variables_interes <- forest_str %>% ungroup %>% dplyr::select(per_qp:ba) %>% names()
+
+test_localidad <- c() 
+
+for (i in 1:length(variables_interes)){
+  test <- two_sample_test(data = forest_str, 
+                  x = localidad, 
+                  y = !!variables_interes[i], paired = FALSE, type = "np")
+  
+  test_localidad <- rbind(test_localidad, test)
+}
+
+test_localidad <- test_localidad %>% rename(variable = parameter1)
+
+
+statby_localidad %>% 
+  pivot_wider(values_from = value, names_from = localidad) %>% 
+  inner_join(test_localidad) %>% 
+  write_csv("forest_str_by_localidad.csv")
+
+
+```
+
+
+# Summary by crop
+```{r}
+m <- forest_str %>% 
+  group_by(crop_code) %>% 
+  summarise_at(vars(per_qp:ba), .funs = mean) %>% 
+  pivot_longer(per_qp:ba, names_to = "variable", values_to = "mean") 
+
+s <- forest_str %>% 
+  group_by(crop_code) %>% 
+  summarise_at(vars(per_qp:ba), .funs = std.error) %>% 
+  pivot_longer(per_qp:ba, names_to = "variable", values_to = "se") 
+
+statby_crop <- m %>% dplyr::inner_join(s) %>% 
+  mutate(across(where(is.numeric), round, 2)) %>% 
+  unite("value", mean:se, sep=" ± ")
+
+
+# Apply test 
+variables_interes <- forest_str %>% ungroup %>% dplyr::select(per_qp:ba) %>% names()
+
+test_crop <- c() 
+
+for (i in 1:length(variables_interes)){
+  test <- oneway_anova(data = forest_str, 
+                  x = crop_code, 
+                  y = !!variables_interes[i], paired = FALSE, type = "np")
+  
+  test_crop <- rbind(test_crop, test)
+}
+
+
+test_crop <- test_crop %>% rename(variable = parameter1)
+
+
+statby_crop %>% 
+  pivot_wider(values_from = value, names_from = crop_code) %>% 
+  inner_join(test_crop) %>% 
+  write_csv("forest_str_by_crop_code.csv")
+```
+
+
+
+
+### Per QP
+```{r}
+ggbetweenstats(data = forest_str, x = crop_code,
+                              type = "np", pairwise.comparisons = TRUE, 
+                              pairwise.display = "s",
+                              y = per_qp)
+```
+
+### Abundance 
+```{r}
+ggbetweenstats(data = forest_str, x = crop_code,
+                              type = "np", pairwise.comparisons = TRUE, 
+                              pairwise.display = "s",
+                              y = abundance)
+```
+
+### ab_juvenile
+```{r}
+ggbetweenstats(data = forest_str, x = crop_code,
+                              type = "np", pairwise.comparisons = TRUE, 
+                              pairwise.display = "s",
+                              y = ab_juvenile)
+```
+
+### ab_adult
+```{r}
+ggbetweenstats(data = forest_str, x = crop_code,
+                              type = "np", pairwise.comparisons = TRUE, 
+                              pairwise.display = "s",
+                              y = ab_adult)
+```
+
+### tree_height_max
+```{r}
+ggbetweenstats(data = forest_str, x = crop_code,
+                              type = "np", pairwise.comparisons = TRUE, 
+                              pairwise.display = "s",
+                              y = tree_height_max)
+```
+
+### tree_height_mean
+```{r}
+ggbetweenstats(data = forest_str, x = crop_code,
+                              type = "np", pairwise.comparisons = TRUE, 
+                              pairwise.display = "s",
+                              y = tree_height_mean)
+```
+
+### tree_height_median
+```{r}
+ggbetweenstats(data = forest_str, x = crop_code,
+                              type = "np", pairwise.comparisons = TRUE, 
+                              pairwise.display = "s",
+                              y = tree_height_median)
+```
+
+### tree_height_q75
+```{r}
+ggbetweenstats(data = forest_str, x = crop_code,
+                              type = "np", pairwise.comparisons = TRUE, 
+                              pairwise.display = "s",
+                              y = tree_height_q75)
+```
+
+### tree_height_q90
+```{r}
+ggbetweenstats(data = forest_str, x = crop_code,
+                              type = "np", pairwise.comparisons = TRUE, 
+                              pairwise.display = "s",
+                              y = tree_height_q90)
+```
+
+### ba
+```{r}
+ggbetweenstats(data = forest_str, x = crop_code,
+                              type = "np", pairwise.comparisons = TRUE, 
+                              pairwise.display = "s",
+                              y = ba)
+```
+
+
