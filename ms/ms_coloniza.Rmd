@@ -1,0 +1,218 @@
+---
+title: "Colonization pattern of abandoned croplands in mountain regions. A study case from Sierra Nevada"
+author: Pérez-Luque, A.J.; Zamora, R.; Bonet-García, F.J. 
+output: 
+  pdf_document:
+      keep_tex: true
+bibliography: ../references.bib 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message=FALSE, warning=FALSE)
+```
+
+```{r pkgs, echo=FALSE}
+library(here)
+library(tidyverse)
+library(flextable)
+library(kableExtra)
+library(stargazer)
+```
+
+
+## Abstract 
+Land abandonment is a major global change driver in the Mediterranean Region where anthropic activity has played an important role shaping landscape configuration. Understanding the woodland expansion towards marginal areas (abandoned crops) is critical to develop effective management strategies. In this work we analyze the colonization pattern of abandoned croplands by *Quercus pyrenaica* in Sierra Nevada. We aimed to assess differences among populations in the rear edge of its distribution. For this purpose we characterized *(i)* the colonization pattern of *Q. pyrenaica*, *(ii)* the structure of the seed source (mature forest), and *(iii)* the abundance of the main seed disperser (European jay, *Garrulus glandarius*). The study was conducted in five abandoned croplands located in two representative populations of *Q. pyrenaica* located in contrasting slopes. We sampled three habitat types: mature forest, edge-forest and abandoned cropland. A total of 83 plots (10 x 30 m) were sampled. In each plot all tree individuals were counted. Basal diameter and height of each tree specimen were measured and sapling abundance was calculated. Abundance of European jay was determined by bird census (7-year) (line-transect method). Sapling abundance was different between northern and southern *Q. pyrenaica* populations. However, no differences on sapling abundance were observed among habitat types. Abundance of jay does not differ significantly between sites. On the other hand, forest structure showed differences between populations. Differences in colonization pattern could be explained by different management histories and (different land-use intensities) before abandonment of the croplands (biological legacies) and cattle management practices.
+
+### keywords
+land-abandonment; colonization; Quercus pyrenaica; Sierra Nevada; 
+
+# Introduction
+
+Land abandonment is a major global change driver in the Mediterranean Region where anthropic activity has played an important role shaping landscape configuration 
+
+. Understanding the woodland expansion towards marginal areas (abandoned crops) is critical to develop effective management strategies.
+
+In this work we analyze the colonization pattern of abandoned croplands by *Quercus pyrenaica* in Sierra Nevada. We aimed to assess differences among populations in the rear edge of its distribution. For this purpose we characterized *(i)* the colonization pattern of *Q. pyrenaica*, *(ii)* the structure of the seed source (mature forest), and *(iii)* the abundance of the main seed disperser (European jay, *Garrulus glandarius*).
+
+
+
+
+Land use and exploitation decreased, mostly at the onset of the nineteenth century, leaving much of the Mediterranean landscapes in an almost barren state, with poor vegetation cover. “Natural” vegetation started to recover spontaneously on abandoned agricultural land by secondary successional processes. In uncultivated landscape patches, but in which the vegetation had been severely degraded by wood-cutting or grazing, succession also commenced following a decrease in land exploitation (Debussche et al. 1999).
+
+
+In Mediterranean area, cropland abandonment has been widespread during the second half of the last century [@Piasetal2014ColonizationAbandoned;@ValbuenaCarabanaetal2010HistoricalRecent].
+
+Land-use change models predict an increase in this trend in the future (Rounsevdell et al. 2006). In fact, land abandonment is considered one of the most powerful global-change drivers in developed countries (Escribano-Avila et al. 2012).
+
+
+This finding is consistent with major social-ecological changes that occurred in the mountain region of Sierra Nevada, expressed by strong depopulation and land abandonment of annual and permanent crops (García Martínez, 1999). Mainly from 1956 to 1977, land abandonment in Sierra Nevada prevailed mostly at higher altitudes, being followed by specialization and intensification land use practices at lower elevations (a trend also verified in other mountain systems (e.g. Gellrich et al., 2007, Zimmermann et al., 2010).
+
+
+
+Algunas montañas han sufrido un cambio dramático en los cambios de uso del suelo (eg) lo cual ha leading to changes in mountain ecosystems (see eg. R)
+
+European Alps (Rutherford)
+
+The abandonment of more marginal agricultural areas, in particular, has resulted in more homogenous landscape patterns (Tasser et al. 2007) and in the loss of biodiversity (Chapin et al. 2000; Zimmermann et al. 2010).
+
+
+Rutherford GN, Bebi P, Edwards PJ, Zimmermann NE (2008) Assessing land-use statistics to model land cover change in a mountainous landscape in the European Alps. Ecol Model 212:460–471
+
+
+Zimmermann P, Tasser E, Leitinger G, Tappeiner U (2010) Effects of land-use and landcover pattern on landscape-scale biodiversity in the European Alps. Agric Ecosyst Environ 139:13–22
+
+
+
+The abandonment of agricultural land became widespread in many developed regions during the second half of the last century (Mottet et al., 2006, Rey Benayas et al., 2007), and land-use change models predict an increase in this trend in coming decades (Rousenvell et al., 2006). 
+
+
+
+
+
+The aim of this work is 
+
+Understanding the woodland expansion towards marginal areas (abandoned crops) is critical to develop effective management strategies. 
+
+In this work we analyze the colonization pattern of abandoned croplands by Quercus pyrenaica in Sierra Nevada
+
+
+
+Our hypothesis is that combination of different land uses strongly affects to colonization pattern. 
+
+We studied the colonization pattern of *Q. pyreanica* woodlands located in the rear edge of their distribution.
+
+
+queremos estudiar como es el patron de colonización natural de los cultivos abandonados y cómo este se ve afectado por el uso del pasado. 
+Para ello vamos a analizar 
+
+Nuestra hipótesis es que aquellos cultivos que fueron abandonados antes 
+
+For this purpose we explore the colonization pattern of 
+
+queremos saber si el patrón de colonización en esta región montañosa está mas determinado por las condiciones climáticas que por las el uso del suelo. 
+
+Nos gustaría inferir si el patrón de colonización hacia hábitats márginales, está mas condicionado por el uso del suelo que por las condiciones climáticas
+
+Objectives:
+to analyze the structure of the seed source (mature forest) 
+to analyze the colonization pattern of abandoned cropland by Q. pyrenaica
+to compare the abundance of the main seed disperser (European jay, G. glandarius)
+
+Our specific goals are: (
+
+to analyze the colonization pattern of abandoned cropland by *Q. pyrenaica*; to explore 
+differences on colonization pattern a
+
+to compare the abundance of the main seed disperser (European jay, G. glandarius)
+
+
+Our specific goals
+are to: (1) describe the patterns of natural regeneration of Q. pyrenaica; (2) experimentally estimate the
+survival probability of acorns and seedlings; (3)
+identify the mortality factors acting on the two
+life-cycle stages; and (4) experimentally test whether
+there are between microhabitat differences in the
+effect of the mortality agents.
+
+
+# Material and methods 
+
+## Study area 
+
+### Sampling description
+
+We sampled 5 abandonment croplands located at two Pyrenean oak forests in contrasting slopes of Sierra Nevada (southern Spain): "Robledal de San Juan" (SJ), a xeric site located at the northern aspect (37°7'29.63"N, 3°21'54.60"W; Güejar-Sierra, Granada, Spain); and "Robledal de Cáñar" (CA), a wetter site located at the southern aspect (37°57'28.04"N, 3°25'57.1"W; Cáñar, Granada) (Figure 1; Table 1). Each cropland was delimited using land-use and land-cover map of Andalusia for 1956 [@CMA2007MapaUsos] combined with a detailed photographic interpretation of the black and white 1956 orthophotos (1-m spatial resolution) [see @NavarroGonzalezetal2012CartografiaHistorica for more details]. The estimation of the age abandonment for each cropland were performed combining intrepretation of orthophotographies with information from local neighbors. We compiled all available aerial ortophotographies of the study areas from Fototeca Digital of the Spanish National Geographic Institute (http://fototeca.cnig.es/). The approximate abandonment age for each cropland was estimated by comparing the sequence of orthophotographs. These dates were accurated using information about past land-use, compiled from local neighbours [by local workshops and interviews with retired elder: farmers, shepherds and loggers; see details in @MorenoLlorcaetal2014CaracterizacionFuentes; @MorenoLlorcaetal2016HistoricalAnalysis]. The estimated rank of ages could be considered accurate (see Table 1). 
+
+For each abandonment cropland linear vegetation transects (30 m x 10 m) were randomly distributed in the old field; at the forest edges; and inside the surrounding forests (Figure 2). The numbers of transect within the old fields and surrounding forests were proportional to abandonment cropland size (Table 1).
+
+```{r, echo=FALSE, eval=FALSE}
+# tab_descriptive_croplands <- descriptive_croplands %>% 
+#   
+#   flextable() %>% 
+#   add_header(loc = "", crop_code = "", age_range = "", elevation = "", area = "",
+#                  `Abandonment Cropland` = "Number of transects",
+#                  Edge = "Number of transects", 
+#                  Forest = "Number of transects", 
+#              top = TRUE) %>% 
+#   set_header_labels(
+#   values = list(loc = "Site",
+#                 crop_code = "Cropland Code",
+#                 age_range = "Cropland Abandonment Age (years)",
+#                 elevation = "Elevation (m)",
+#                 area = "Area (ha)")) %>% 
+#   merge_h(part = "header") %>% 
+#   merge_v(j=1)
+# 
+# tab_descriptive_croplands
+
+```
+
+```{r croplands, echo=FALSE, message=FALSE}
+descriptive_croplands <- read_csv(here::here("data/tabla_descriptivos_crops.csv")) %>% 
+  dplyr::select(-loc_code, -age)
+ 
+descriptive_croplands %>% 
+  kbl(col.names = c("Site",
+                    "Code",
+                    "Abandonment Age (years)",
+                    "Elevation (m)",
+                    "Area (ha)",
+                    "Cropland",
+                    "Edge",
+                    "Forest"), 
+       booktabs = T, linesep = "", 
+      align = "c", escape = FALSE, 
+      caption = "Abandonment cropland features") %>% 
+  kable_styling(latex_options = c("scale_down")) %>% 
+  collapse_rows(columns = 1) %>% 
+  add_header_above(c(" " = 1, "Cropland" = 2, " " = 2, "Number of transects" = 3)) %>% 
+  column_spec(column = 3, width = "8em")
+```
+
+A total of 83 vegetation transects were sampled in autumn 2012. In each vegetation transect all tree species were recorded, and tree height and diameter were measured. For each transect we computed the juvenile abundance as the number of individuals lower than 150 cm tall. We did not separate the generative and vegetative origins of young oaks, since it is difficult due to resprouting trait of this species. In addition to the juvenile abundance, we explored differences between several recruitment stages based on individual size [e.g. @Plieningeretal2010LargeScalePatterns]. We considered five size categories based in height (every 30 cm). All data were properly documented and published in an international repository [see @PerezLuqueetal2015DatasetMIGRAME for a detailed description of the dataset]. 
+
+#### Disperser community 
+To explore the disperser community in our study sites, we used bird censuses carried out by the Sierra Nevada Global Change Observatory. This dataset contains bird censuses at different ecosystems types of Sierra Nevada since 2008 [for more details see @BareaAzconetal2012PasseriformesOtrasa; @PerezLuqueetal2016DatasetPasserine]. We only used data for the Eurasian jay (*Garrulus glandarius*), since it is the main disperser of *Q. pyrenaica* [@Gomez2003ImpactVertebrate]. As we are interested in the comparison of the Eurasian jay community between the two study sites, we computed the annual bird abundances (in terms of birds/10 ha) for each site during a 7-year period (2008-2013). For more details about bird censuses see @BareaAzconetal2012PasseriformesOtrasa and @ZamoraBareaAzcon2015LongTermChanges. 
+
+## Data Analysis 
+
+We used the vegetation transects carried out inside the forest to analyze the structure of the seed source (mature forest). We computed several parameters related to forests' structure and functioning: tree density, juvenile abundance, tree species composition, tree size related statistics (*i.e.* mean, median, maximum, 75 and 90 percentiles of tree-height), and basal area (BA). Differences between sites were assessed using the non-parametric Mann–Whitney U-test, since data does not met normality and/or homocedasticity assumptions. We also compared whether there was variation within transects belong to the same locality. Comparison of the bird disperser abundance (*G. glandarius*) were performed using ANOVA analyses, to explore differences between sites and along time. 
+
+
+Sapling abundance were 
+
+
+
+
+
+....
+
+
+
+
+
+
+Then, environmental variables and forest attributes were tested for differences among population groups previously identified. Normality and homoscedasticity were checked using the Shapiro–Wilk test and Levene’s test, respectively. If normality and homoscedasticity assumptions were satisfied, we performed ANOVA analysis followed by the Tukey LSD for testing statistical significance. Otherwise, Kruskal–Wallis ANOVA for nonparametric data were conducted followed by manual pairwise comparison using the Mann–Whitney U-test.
+
+Subsequently, we evaluated whether there were differences between the two localities using nonparametric tests. 
+
+Para cada una de esas varables realiamos 
+
+Posteriormente evaluamos si había diferencias entre las dos localidades mediante la utilización de test no paramétricos. Asimismo comparamos si existía variación dentro de una misma localidad. 
+
+
+
+
+- Negative Binomial Mixed Models were applied to evaluate differences in sapling abundance between localities and habitat-type. 
+
+Prior to the analysis, data exploration were applied following a protocol described by Zuur et al. (2010) and Ieno and Zuur (2015) 
+
+As the dataset comprised count data, we initially used generalized linear mixed models (GLMM) with Poisson distribution. However, these models were overdispersed. Consequently, Negative Binomial GLMM models were applied: 
+
+
+
+
+
+
+
