@@ -7,10 +7,25 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-```{r}
+# Intro
+
+- The aim of this code is to compare the forest structure of the two study sites. 
+
+- We selected several dependent variables and performed non-parametric analysis comparing the value of the variables between sites 
+
+- Dependent variables: 
+  
+  - Total abundance 
+  - Composition (% of *Q. pyrenaica*)
+  - Juvenile abundance
+  - Tree-height statistics (mean, median, maximum)
+  - Basal Area (m^2^ ha^-1^)
+
+
+```{r, pkg}
 library(tidyverse)
 library(here)
 library(knitr)
@@ -21,28 +36,14 @@ library(plotrix) #std.error
 library("flextable")
 ```
 
-
-```{r}
+## Prepare data 
+```{r, prepareData}
 # Select data from forest
 # Remove data without values in altura field
 forest <- read_csv(here::here("data/tree_data_crops.csv")) %>% 
   filter(tipo == 'ROBLEDAL') %>% 
   filter(!is.na(altura))  
-```
 
-
-- Analisis no paramétrico para cada variable dependiente 
-
-- variables dependientes: 
-
-  - [] abundancia total 
-  - [] composicion (% de Q. pyrenaica)
-  - [] abundancia de juveniles
-  - [] media, mediana, max tree heigth 
-  - [] BA (m2/ha)
-
-
-```{r, prepareData}
 # composition and abundance (ind /ha)
 composition <- forest %>% 
   group_by(crop_code, localidad, especie, nombre) %>% 
@@ -94,12 +95,11 @@ forest_str <- composition %>%
   inner_join(ba) %>% 
   dplyr::select(-especie)
 
-
 write_csv(forest_str, here::here("data/forest_structure.csv"))
 ```
 
 
-# Summary by locality
+## Get summary by locality
 ```{r}
 ml <- forest_str %>% 
   group_by(localidad) %>% 
@@ -142,11 +142,10 @@ forest_str_by_localidad %>%
 
 forest_str_by_localidad %>% write_csv(here::here("data/forest_str_by_localidad.csv"))
 
-
 ```
 
 
-# Summary by crop
+# Get summary by cropland
 ```{r}
 m <- forest_str %>% 
   group_by(crop_code) %>% 
@@ -194,15 +193,11 @@ forest_str_by_crop_code %>%  flextable(col_keys = c("variable","CA1","CA2","CA3"
                          "SJ1","SJ2", "statistic", "p.value")) %>% 
   colformat_double(digits = 3)
 
-
-
-
-
-
 ```
 
+## Exploratory plots by variable
 
-### Per QP
+### Composistion (% *Q. pyrenaica*)
 ```{r}
 ggbetweenstats(data = forest_str, x = crop_code,
                               type = "np", pairwise.comparisons = TRUE, 
