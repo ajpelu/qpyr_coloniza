@@ -1,0 +1,355 @@
+---
+title: "Model Juvenile Abundance"
+output: 
+  html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library("tidyverse")
+library("here")
+library("knitr")
+library("kableExtra")
+library("plotrix") #std.error 
+library("rcompanion")
+library("statmod")
+library("tweedie")
+# load functions from Zuur et al (2009) 
+source(here::here("analysis/HighstatLibV6.R"))
+
+# https://stackoverflow.com/questions/49836521/trouble-installing-glmmadmb-in-r
+library('glmmADMB') # See Zuur et al. 2013. p146 
+library('lattice')
+library('MASS') #for negative binomial
+library("performance")
+library("DHARMa")
+library("MuMIn")
+library("broom")
+```
+
+## Prepare Data 
+
+```{r, readData}
+data <- read_csv(here::here("data/tree_data_crops.csv")) %>%
+  mutate(sp = case_when(
+    especie == "roble" ~ "qp",
+    especie == "encina" ~ "qi",
+    especie == "pino" ~ "pi"
+  ))
+
+# Add data of the transects selected
+transectos <- read_csv(here::here("data/transectos_crops.csv"))
+
+info_transectos <- transectos %>%
+  dplyr::select(nombre, tipo, localidad, crop_code, altitud)
+
+juvenile_abundance <- data %>%
+  group_by(sp, nombre) %>%
+  count() %>%
+  pivot_wider(names_from = sp, values_from = n, names_prefix = "juv_") %>%
+  rowwise() %>%
+  mutate(
+    ntotal = sum(juv_qp, juv_qi, juv_pi, na.rm = TRUE),
+    nquercus = sum(juv_qp, juv_qi, na.rm = TRUE),
+    juvenile_ab = round(ntotal * 100 / 300, 2),
+    juvenileQuer_ab = round(nquercus * 100 / 300, 2),
+    juvenileQp_ab = round(juv_qp * 100 / 300, 2)
+  )
+
+df <- info_transectos %>%
+  left_join(juvenile_abundance) %>%
+  mutate_all(~ replace_na(., 0))
+
+
+qp <- df %>%
+  dplyr::select(nombre, tipo, localidad, altitud, crop_code, ab = juvenileQp_ab) %>%
+  mutate(
+    nombre = as.factor(nombre),
+    tipo = as.factor(tipo),
+    localidad = as.factor(localidad),
+    crop_code = as.factor(crop_code)
+  )
+
+```
+
+# Modelization 
+
+- Negative binomial, Poisson or Tweedie. 
+
+- First we modelized a Negative Binomial, because Poisson model is overdispersed 
+
+```{r modelNB}
+nb <-MASS::glm.nb(ab ~ tipo*localidad, data = qp, link = "log")
+```
+
+- Check distribution of the data, using `performance::check_distribution`
+
+```{r}
+performance::check_distribution(nb)
+```
+
+
+```{r}
+plot(performance::check_distribution(nb))
+```
+
+- We will model with Tweedie distribution, with $y \sim Tw_{\xi}(\mu, \phi)$
+
+## Tweedie GLM
+- First we estimate $\xi$ using `tweedie::tweedie.profile` function.
+
+```{r}
+set.seed(1234)
+# xi parameter 
+out <- tweedie.profile(ab ~ tipo*altitud, data = qp, 
+                       do.plot = TRUE,
+                       xi.vec = seq(1.05, 1.8, by= 0.05))
+```
+
+```{r}
+t(t(c("MLE of xi" = out$xi.max, "lower CI 95%" = out$ci[1], "upper CI 95 %" = out$ci[2]))) %>% as.data.frame() %>% rename("Maximum Likelihood Estimation" = V1)
+```
+
+```{r}
+xi.est <- round(out$xi.max, 2)
+```
+
+- Now, we modeled the Tweedie GLM using the estimate of the index parameter ($\xi = $ `r xi.est`) 
+
+```{r}
+m <- glm(ab ~ tipo*localidad, data = qp, family = tweedie(var.power = xi.est, link.power = 0))
+```
+
+- Check model diagnostics 
+
+```{r}
+performance::check_model(m)
+```
+
+### Model selection  
+```{r}
+library(performance)
+mfull <- glm(ab ~ tipo*localidad, data = qp, family = tweedie(var.power = xi.est, link.power = 0))
+mtl <- glm(ab ~ tipo + localidad, data = qp, family = tweedie(var.power = xi.est, link.power = 0))
+mt <- glm(ab ~ tipo, data = qp, family = tweedie(var.power = xi.est, link.power = 0))
+ml <- glm(ab ~ localidad, data = qp, family = tweedie(var.power = xi.est, link.power = 0))
+mnull <- glm(ab ~ 1, data = qp, family = tweedie(var.power = xi.est, link.power = 0))
+
+r2 <- function(mimodelo){round(((mimodelo$null.deviance - mimodelo$deviance) / mimodelo$null.deviance),3)}
+
+models_selection <- 
+model.sel(mfull, mtl, mt, ml, mnull, rank = AICtweedie) %>% as.data.frame() %>% 
+    mutate(model.name = c(
+      "~ habitat type + site + habitat type:site", 
+      "~ habitat type + site", 
+      "~ habitat type", 
+      "~ site",
+      "null model"), 
+           f = c(mfull$formula, mtl$formula, mt$formula, ml$formula, mnull$formula), 
+           r2nagelkerke = round(
+             c(r2_nagelkerke(mfull), r2_nagelkerke(mtl), r2_nagelkerke(mt), r2_nagelkerke(ml),r2_nagelkerke(mnull)),3),
+           r2 = round(
+             c(r2(mfull), r2(mtl), r2(mt), r2(ml), r2(mnull)),3),
+           logLiktweedie = c(logLiktweedie(mfull),
+                             logLiktweedie(mtl),
+                             logLiktweedie(mt),
+                             logLiktweedie(ml),
+                             logLiktweedie(mnull)
+                             )) %>% 
+  dplyr::select(-f, -localidad, -tipo, -`localidad:tipo`, -family,-`(Intercept)`, -logLik, -weight) %>% 
+  relocate(model.name, df, logLiktweedie) 
+
+write.table(models_selection, 
+            here::here("ms/table_model_selection.csv"))
+
+```
+
+
+```{r}
+options(knitr.kable.NA = '') # suppress showing NA values in table
+kable(models_selection, format = "html",  
+      digits = c(0, 0, 2, 2, 2, 3,3), align = "rrrrrrr", row.names = FALSE)  %>%
+  kable_styling(position = "left")
+```
+
+### Anova table
+
+```{r}
+library(car)
+library(kableExtra)
+a <- Anova(mfull, test="F") %>% as.data.frame()
+names(a) <- c("SS", "df", "F", "p-value")
+
+write.table(a, here::here("ms/table_anova.csv"))
+```
+
+```{r}
+options(knitr.kable.NA = '') # suppress showing NA values in table
+kable(a, format = "html",  
+      digits = c(3, 0, 2, 4), align = "rrrr")  %>%
+  kable_styling(position = "left")
+```
+
+
+- Report
+```{r, warning=FALSE}
+library("report")
+report(mfull)
+report_performance(mfull)
+report_statistics(mfull)
+```
+
+
+### Plot 
+```{r}
+library(ggpubr)
+library(broom)
+library(plotrix)
+library(rcompanion)
+library(multcompView)
+library(multcomp)
+library(ggrepel)
+
+ab_mean <- qp %>% 
+  group_by(localidad, tipo) %>% 
+  summarise(
+    mean = mean(ab, na.rm = TRUE),
+    sd = sd(ab, na.rm = TRUE),
+    se = plotrix::std.error(ab, na.rm = TRUE)
+  ) 
+
+ab_boot <- groupwiseMean(ab ~ localidad + tipo,
+              data = qp,
+              conf = 0.95,
+              digits = 3,
+              R   = 10000,
+              boot        = TRUE,
+              traditional = FALSE,
+              normal      = FALSE,
+              basic       = FALSE,
+              percentile  = FALSE,
+              bca         = TRUE) %>% 
+  mutate(site = 
+           case_when(localidad == "CANAR" ~ "CA", 
+                     TRUE ~ "SJ"),
+         type = 
+           case_when(tipo == "CLARO" ~ "Cropland", 
+                     tipo == "CLARO_BORDE" ~ "Edge",
+                     TRUE ~ "Forest")) %>% 
+  inner_join((qp %>% group_by(localidad, tipo) %>% 
+  summarise(se = round(plotrix::std.error(ab, na.rm = TRUE),2)))) %>% 
+  relocate(localidad:Mean, se) %>% ungroup() %>% as.data.frame()
+
+## Add letters 
+
+### Compare bewteen sites by type
+library(lsmeans)
+
+letter_type <- 
+  cld(lsmeans(mfull, ~ tipo|localidad),
+    level = .95,
+    Letters=letters,      ### Use lower-case letters for .group
+    adjust="tukey",        ### Tukey-adjusted comparisons 
+) %>% data.frame()
+
+ab_boot <- ab_boot %>% inner_join(letter_type) %>% 
+  rename(letra = `.group`)
+
+l_site <- ab_boot %>% group_by(type) %>% 
+  summarise(y = mean(Mean)) %>% 
+  mutate(dif = 
+           case_when(type == "Cropland" ~ "***",
+                     type == "Edge" ~ "***",
+                     type == "Forest" ~ ""))
+
+
+pd <- position_dodge(.4)
+ab_interaction <- 
+  ggplot(data=ab_boot, 
+         aes(x=site, y=Mean, shape=type, group=type)) +
+    geom_point(color='black', size=4, position=pd) +
+    geom_errorbar(aes(ymin=Bca.lower, ymax=Bca.upper), 
+                  color='black', width=.2, position=pd) +
+    geom_line(position=pd) +
+    xlab("site") + 
+  ylab(expression(paste("Juvenile abundance (ind/100 ",m^2,")"))) + 
+    theme_bw() +
+    guides(shape=guide_legend(title="")) + 
+  theme(panel.grid = element_blank()) + 
+  geom_text_repel(nudge_x = 0.2,
+                  nudge_y = 0.1,
+                  direction = "both",
+                  aes(label=letra), 
+                  segment.color = NA) +
+  geom_text(data=l_site, aes(y=y, x=1.6, label=dif))+
+  theme(axis.title=element_text(size = rel(1.7)),
+          axis.text=element_text(size = rel(1.7)),
+          legend.title=element_text(size = rel(1.3)),
+          legend.text=element_text(size = rel(1.3)))
+```
+
+```{r}
+write.table(ab_boot, here::here("ms/table_means.csv"))
+```
+
+```{r, ab-interaction, dev=c('png', 'pdf', 'svg', 'tiff')}
+print(ab_interaction)
+```
+
+```{r}
+ggsave(ab_interaction, filename = here::here("ms/juvenile_interaction.pdf"))
+```
+
+
+
+
+
+
+
+
+
+
+
+- post hocs 
+```{r}
+pairs(emmeans(mfull, c("tipo"), by="localidad")) %>% 
+  data.frame() %>% 
+  kable(format = "html",  
+      digits = c(0,0,3, 3, 0, 3, 4), align = "rrrrrrr")  %>%
+  kable_styling(position = "left")
+```
+
+```{r}
+pairs(emmeans(mfull, c("localidad"), by="tipo")) %>% data.frame() %>% 
+    kable(format = "html",  
+      digits = c(0,0,3, 3, 0, 3, 4), align = "rrrrrrr")  %>%
+  kable_styling(position = "left")
+
+```
+
+```{r, echo = FALSE, eval=FALSE}
+data.frame(multcomp::cld(
+  pairs(emmeans(mfull, "localidad", by="tipo"), 
+    Letters=letters,
+    alpha = 0.05))) %>% 
+  rename(comp_type = `.group`)
+```
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
