@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE,
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 library("tidyverse")
 library("here")
 library("car")
@@ -25,14 +25,16 @@ library("ggstatsplot")
 library("statsExpressions")
 library("plotrix") #std.error 
 library("flextable")
+library("DT")
+library("gtsummary")
 ```
 
-
+# Prepare data
 ## Data sources
 
 *Obsnev bird censuses* provided by [*OBSNEV*](https://obsnev.es/), realized in several transects distributed along Sierra Nevada. Temporal range from 2008 to 2020. The data were downloaded from new information system of OBSNEV (*i.e.* PostgreSQL [db01.obsnev.es](db01.obsnev.es))
   
-### Prepare OBSNEV bird censuses 
+## Prepare OBSNEV bird censuses 
 
 - Raw data were downloaded from OBSNEV information system. The downloaded tables were: 
 `contactos_paseriformes.csv`; `dicc_especies.csv`; `geo.csv`; `visitas.csv`. 
@@ -88,7 +90,7 @@ df <- dfraw %>%
 ```
 
 
-- Aggregated data to get the sum of all contacts for a specie recorded in the same visit of the same transect
+- Aggregate data to get the sum of all contacts for a specie recorded in the same visit of the same transect
 
 - Select data from 2008 to 2014 
 
@@ -105,16 +107,27 @@ garrulus <- df %>%
   filter(year < 2015)
 ```
 
-# Aggregate by year 
+```{r}
+report_text(garrulus)
+```
+
+
+## Aggregate data by year 
+- Bird abundance (ind / 10 ha)
+
 ```{r}
 garrulus_by_year <- garrulus %>% 
   group_by(localidad, year) %>% 
   summarise(mean = mean(den, na.rm = TRUE), 
             se = std.error(den), 
-            n = length(den)) 
+            n = length(den))
+
+garrulus_by_year %>% 
+  datatable(filter = "top") %>% 
+  formatRound(columns=c('mean', 'se'), digits=2)
 ```
 
-# Plot 
+## Exploratory Plot 
 
 ```{r coloniza-garrulus, dev=c('png', 'pdf', 'svg', 'tiff')}
 pos <- position_dodge(0.15)
@@ -136,38 +149,34 @@ print(plot_garrulus)
 ```
 
 ## Analysis of variance  
-- Ojo son unbalanced, usamos type III 
+- The data are unbalanced (we used type III)
 
 ```{r}
 garrulus$year <- as.factor(garrulus$year)
-
 aov.unb <- aov(den ~ year * localidad, data = garrulus)
 a <- car::Anova(aov.unb, type ="III", test="F")
 report(a)
+```
 
+```{r}
+knitr::kable(a, digits = c(3,0,3,4)) %>% 
+  kable_styling()
+```
+
+```{r}
 aa <- anova(aov.unb, test="F")
-
+knitr::kable(aa, digits = c(0,3,3,3,4)) %>% kable_styling()
 ```
 
-```{r}
-broom::tidy(aa) %>% 
-  kableExtra::kbl(
-    digits = 3,
-    booktabs = T, linesep = "", 
-      align = "c", escape = FALSE
-  )
-```
-
-```{r}
-report_text(garrulus)
-```
-
+### Plot exploring bewteen sites 
 
 ```{r}
 ggbetweenstats(data=garrulus, 
                x=localidad, 
                y=den)
 ```
+
+- Get mean values by locality 
 
 ```{r}
 garrulus_by_year %>% 
@@ -177,49 +186,6 @@ garrulus_by_year %>%
     summarise(mean = mean(avg, na.rm = TRUE), 
             se = std.error(avg), 
             n = length(avg)) %>% 
-  kbl(digits = 3, booktabs = TRUE)
+  kable(digits = c(0,2,2,0)) %>% kable_styling()
 ```
-
-
-
-
- 
-
-
-
-
-
-
-
-```{r, eval=FALSE, echo=FALSE}
-library(CGPfunctions)
-Plot2WayANOVA(formula = den ~ localidad * year, dataframe = garrulus)
-```
-
-```{r, eval=FALSE, echo=FALSE}
-garrulus_mensual <- dfab %>%  
-  mutate(month_year = format(as.Date(fecha, format="%Y-%m-%d"), format = "%Y-%m")) %>% 
-  group_by(localidad, month_year) %>% 
-  summarise(mean = mean(den, na.rm = TRUE), 
-            se = std.error(den))
-  ggplot(aes(x=))
-  
-garrulus_mensual %>% 
-  ggplot(aes(x=month_year, y=mean)) +
-  geom_bar(stat="identity") + 
-  geom_errorbar(aes(ymin = mean - se, ymax=mean + se)) + 
-  facet_wrap(~localidad, nrow = 2)
-  
-  
-```
-
-
-
- 
- 
- 
- 
-
-
-  
 
