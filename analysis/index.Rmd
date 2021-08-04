@@ -16,3 +16,5 @@ editor_options:
 - Compare [forest structure](compare_forest_structure.html) of the two study sites
 
 - Modelling the [juvenile abundance](analysis_juvenile_abundance.html) of Pyrenean oak
+
+- [Plot](figura_size_category.html) of juvenile abundance  categorized by tree-height, faceted by site and habitat type
