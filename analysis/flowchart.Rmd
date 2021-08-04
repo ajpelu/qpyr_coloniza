@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 library("DiagrammeR")
 ```
 
+## Compute abundances 
 ```{r}
 mermaid('
 graph TD
