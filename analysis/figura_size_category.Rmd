@@ -29,7 +29,7 @@ df_roble <- d %>% filter(especie == "roble") %>%
   ))
 ```
 
-# Plot by size category (all trees)
+# Plot by size category (only juveniles)
 ```{r}
 # Get nº ind /100m2 by size_category
 df_summary <- df_roble %>% 
@@ -46,7 +46,8 @@ df_mean <- df_summary %>%
 ```
 
 ```{r, ploTreeSizes, dev=c('png', 'pdf', 'svg', 'tiff')}
-micolor <- '#222943'
+# micolor <- '#222943' #oldblue
+micolor <- '#007EE3'
 
 plot_tree_category <- df_mean %>% 
   mutate(sizeCat = as.numeric(str_replace(size_category, "size", ""))) %>%
