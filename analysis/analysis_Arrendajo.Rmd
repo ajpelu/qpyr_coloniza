@@ -29,12 +29,12 @@ library("DT")
 library("gtsummary")
 ```
 
-# Prepare data
-## Data sources
+## Prepare data
+### Data sources
 
 *Obsnev bird censuses* provided by [*OBSNEV*](https://obsnev.es/), realized in several transects distributed along Sierra Nevada. Temporal range from 2008 to 2020. The data were downloaded from new information system of OBSNEV (*i.e.* PostgreSQL [db01.obsnev.es](db01.obsnev.es))
   
-## Prepare OBSNEV bird censuses 
+### Prepare OBSNEV bird censuses 
 
 - Raw data were downloaded from OBSNEV information system. The downloaded tables were: 
 `contactos_paseriformes.csv`; `dicc_especies.csv`; `geo.csv`; `visitas.csv`. 
@@ -112,7 +112,7 @@ report_text(garrulus)
 ```
 
 
-## Aggregate data by year 
+### Aggregate data by year 
 - Bird abundance (ind / 10 ha)
 
 ```{r}
