@@ -1,7 +1,7 @@
 ---
-title: "Garrulus data"
+title: "Analyze abundance data of Garrulus glandarius"
 output: 
-  github_document
+  html_document
 editor_options: 
   chunk_output_type: console
 always_allow_html: true
@@ -21,9 +21,9 @@ library("report")
 library("plotrix")
 library("broom")
 library("kableExtra")
-library(ggstatsplot)
-library(statsExpressions)
-library(plotrix) #std.error 
+library("ggstatsplot")
+library("statsExpressions")
+library("plotrix") #std.error 
 library("flextable")
 ```
 
@@ -114,7 +114,7 @@ garrulus_by_year <- garrulus %>%
             n = length(den)) 
 ```
 
-# Gráfico 
+# Plot 
 
 ```{r coloniza-garrulus, dev=c('png', 'pdf', 'svg', 'tiff')}
 pos <- position_dodge(0.15)
@@ -135,18 +135,27 @@ plot_garrulus <- garrulus_by_year %>%
 print(plot_garrulus)
 ```
 
-## AOV 
-- Ojo son unbalanced, usados type III 
+## Analysis of variance  
+- Ojo son unbalanced, usamos type III 
 
 ```{r}
+garrulus$year <- as.factor(garrulus$year)
+
 aov.unb <- aov(den ~ year * localidad, data = garrulus)
-car::Anova(aov.unb, type ="III")
-report(aov.unb)
+a <- car::Anova(aov.unb, type ="III", test="F")
+report(a)
+
+aa <- anova(aov.unb, test="F")
+
 ```
 
 ```{r}
-broom::tidy(aov.unb) %>% 
-  kableExtra::kbl()
+broom::tidy(aa) %>% 
+  kableExtra::kbl(
+    digits = 3,
+    booktabs = T, linesep = "", 
+      align = "c", escape = FALSE
+  )
 ```
 
 ```{r}
