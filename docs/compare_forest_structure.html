@@ -465,16 +465,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree3305bb3f5b66c41a458308df71bf0348afbb4187targetblank3305bb3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/3305bb3f5b66c41a458308df71bf0348afbb4187" target="_blank">3305bb3</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree26f50fa4615bab103ee20d2c53c1d342555bb6c0targetblank26f50faa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/26f50fa4615bab103ee20d2c53c1d342555bb6c0" target="_blank">26f50fa</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree3305bb3f5b66c41a458308df71bf0348afbb4187targetblank3305bb3a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree26f50fa4615bab103ee20d2c53c1d342555bb6c0targetblank26f50faa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/3305bb3f5b66c41a458308df71bf0348afbb4187" target="_blank">3305bb3</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/26f50fa4615bab103ee20d2c53c1d342555bb6c0" target="_blank">26f50fa</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -520,6 +520,7 @@ Unstaged changes:
     Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-8-1.png
     Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-9-1.png
     Modified:   analysis/generaTabla_descriptivos_crops.R
+    Modified:   data/forest_str_by_crop_code.csv
     Modified:   ms/ms_coloniza.Rmd
     Modified:   ms/ms_coloniza.pdf
     Modified:   ms/ms_coloniza.tex
@@ -561,6 +562,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/26f50fa4615bab103ee20d2c53c1d342555bb6c0/analysis/compare_forest_structure.Rmd" target="_blank">26f50fa</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+<td>
+prepare wflowr
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/qpyr_coloniza/d31b03c33618ea3c77df07276babc6d89c989872/docs/compare_forest_structure.html" target="_blank">d31b03c</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -619,72 +654,37 @@ analysis to compare forest structure
 </div>
 </div>
 </div>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>✓ ggplot2 3.3.3     ✓ purrr   0.3.4
-✓ tibble  3.1.2     ✓ dplyr   1.0.6
-✓ tidyr   1.1.3     ✓ stringr 1.4.0
-✓ readr   1.4.0     ✓ forcats 0.5.1</code></pre>
-<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-x dplyr::filter() masks stats::filter()
-x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(here)</code></pre>
-<pre><code>here() starts at /Users/ajpelu/Google Drive/_phd/03_colonization/qpyr_coloniza</code></pre>
-<pre class="r"><code>library(knitr)
-library(kableExtra)</code></pre>
-<pre><code>
-Attaching package: &#39;kableExtra&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:dplyr&#39;:
-
-    group_rows</code></pre>
-<pre class="r"><code>library(ggstatsplot)</code></pre>
-<pre><code>You can cite this package as:
-     Patil, I. (2021). Visualizations with statistical details: The &#39;ggstatsplot&#39; approach.
-     PsyArxiv. doi:10.31234/osf.io/p7mku</code></pre>
-<pre class="r"><code>library(statsExpressions)
+<div id="intro" class="section level1">
+<h1>Intro</h1>
+<ul>
+<li><p>The aim of this code is to compare the forest structure of the two study sites.</p></li>
+<li><p>We selected several dependent variables and performed non-parametric analysis comparing the value of the variables between sites</p></li>
+<li><p>Dependent variables:</p>
+<ul>
+<li>Total abundance</li>
+<li>Composition (% of <em>Q. pyrenaica</em>)</li>
+<li>Juvenile abundance</li>
+<li>Tree-height statistics (mean, median, maximum)</li>
+<li>Basal Area (m<sup>2</sup> ha<sup>-1</sup>)</li>
+</ul></li>
+</ul>
+<pre class="r"><code>library(tidyverse)
+library(here)
+library(knitr)
+library(kableExtra)
+library(ggstatsplot)
+library(statsExpressions)
 library(plotrix) #std.error 
 library(&quot;flextable&quot;)</code></pre>
-<pre><code>
-Attaching package: &#39;flextable&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:kableExtra&#39;:
-
-    as_image, footnote</code></pre>
-<pre><code>The following object is masked from &#39;package:purrr&#39;:
-
-    compose</code></pre>
+<div id="prepare-data" class="section level2">
+<h2>Prepare data</h2>
 <pre class="r"><code># Select data from forest
 # Remove data without values in altura field
 forest &lt;- read_csv(here::here(&quot;data/tree_data_crops.csv&quot;)) %&gt;% 
   filter(tipo == &#39;ROBLEDAL&#39;) %&gt;% 
-  filter(!is.na(altura))  </code></pre>
-<pre><code>
-── Column specification ────────────────────────────────────────────────────────
-cols(
-  .default = col_character(),
-  id = col_double(),
-  altitud = col_double(),
-  altura = col_double(),
-  eje_mayor = col_double(),
-  eje_menor = col_double(),
-  diametro_base = col_double(),
-  porcentaje_herbivoria = col_double(),
-  edad = col_double(),
-  cesped = col_logical(),
-  edad_interpolada = col_double()
-)
-ℹ Use `spec()` for the full column specifications.</code></pre>
-<ul>
-<li><p>Analisis no paramétrico para cada variable dependiente</p></li>
-<li><p>variables dependientes:</p>
-<ul>
-<li>[] abundancia total</li>
-<li>[] composicion (% de Q. pyrenaica)</li>
-<li>[] abundancia de juveniles</li>
-<li>[] media, mediana, max tree heigth</li>
-<li>[] BA (m2/ha)</li>
-</ul></li>
-</ul>
-<pre class="r"><code># composition and abundance (ind /ha)
+  filter(!is.na(altura))  
+
+# composition and abundance (ind /ha)
 composition &lt;- forest %&gt;% 
   group_by(crop_code, localidad, especie, nombre) %&gt;% 
   count() %&gt;% 
@@ -707,9 +707,9 @@ ab &lt;- forest %&gt;%
 ab_roble &lt;- ab %&gt;% filter(especie==&quot;roble&quot;) %&gt;% 
   mutate(ab_juvenile = replace_na(juvenile, 0),
          ab_adult = replace_na(adult, 0)) %&gt;% 
-  dplyr::select(-juvenile, -adult,  -especie)</code></pre>
-<pre><code>Adding missing grouping variables: `especie`</code></pre>
-<pre class="r"><code># height
+  dplyr::select(-juvenile, -adult,  -especie)
+
+# height
 tree_height &lt;- forest %&gt;% 
   filter(especie == &quot;roble&quot;) %&gt;% 
   group_by(crop_code, localidad, nombre) %&gt;% 
@@ -717,28 +717,28 @@ tree_height &lt;- forest %&gt;%
             tree_height_mean = mean(altura, na.rm = TRUE)/100,
             tree_height_median = median(altura, na.rm = TRUE)/100,
             tree_height_q75 = quantile(altura, 0.75)/100,
-            tree_height_q90 = quantile(altura, 0.9)/100)</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;crop_code&#39;, &#39;localidad&#39;. You can override using the `.groups` argument.</code></pre>
-<pre class="r"><code># BASAL AREA (m2/ha)
+            tree_height_q90 = quantile(altura, 0.9)/100)
+
+
+# BASAL AREA (m2/ha)
 ba &lt;- forest %&gt;% 
   filter(especie == &quot;roble&quot;) %&gt;% 
   # filter(tree_type == &quot;adult&quot;) %&gt;% 
   mutate(ba_tree = (pi*diametro_base*diametro_base)/40000) %&gt;% 
   group_by(crop_code, localidad, nombre) %&gt;% 
-  summarise(ba = ((sum(ba_tree))*10000)/300)</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;crop_code&#39;, &#39;localidad&#39;. You can override using the `.groups` argument.</code></pre>
-<pre class="r"><code>forest_str &lt;- composition %&gt;% 
+  summarise(ba = ((sum(ba_tree))*10000)/300)
+
+forest_str &lt;- composition %&gt;% 
   dplyr::select(crop_code, localidad, nombre, per_qp, abundance) %&gt;% 
   inner_join(ab_roble) %&gt;% 
   inner_join(tree_height) %&gt;% 
   inner_join(ba) %&gt;% 
-  dplyr::select(-especie)</code></pre>
-<pre><code>Joining, by = c(&quot;crop_code&quot;, &quot;localidad&quot;, &quot;nombre&quot;)</code></pre>
-<pre><code>Joining, by = c(&quot;crop_code&quot;, &quot;localidad&quot;, &quot;nombre&quot;)
-Joining, by = c(&quot;crop_code&quot;, &quot;localidad&quot;, &quot;nombre&quot;)</code></pre>
-<pre class="r"><code>write_csv(forest_str, here::here(&quot;data/forest_structure.csv&quot;))</code></pre>
-<div id="summary-by-locality" class="section level1">
-<h1>Summary by locality</h1>
+  dplyr::select(-especie)
+
+write_csv(forest_str, here::here(&quot;data/forest_structure.csv&quot;))</code></pre>
+</div>
+<div id="get-summary-by-locality" class="section level2">
+<h2>Get summary by locality</h2>
 <pre class="r"><code>ml &lt;- forest_str %&gt;% 
   group_by(localidad) %&gt;% 
   summarise_at(vars(per_qp:ba), .funs = mean) %&gt;% 
@@ -751,9 +751,9 @@ sl &lt;- forest_str %&gt;%
 
 statby_localidad &lt;- ml %&gt;% dplyr::inner_join(sl) %&gt;% 
   mutate(across(where(is.numeric), round, 2)) %&gt;% 
-  unite(&quot;value&quot;, mean:se, sep=&quot; ± &quot;)</code></pre>
-<pre><code>Joining, by = c(&quot;localidad&quot;, &quot;variable&quot;)</code></pre>
-<pre class="r"><code># Apply test 
+  unite(&quot;value&quot;, mean:se, sep=&quot; ± &quot;)
+
+# Apply test 
 variables_interes &lt;- forest_str %&gt;% ungroup %&gt;% dplyr::select(per_qp:ba) %&gt;% names()
 
 test_localidad &lt;- c() 
@@ -764,29 +764,20 @@ for (i in 1:length(variables_interes)){
                   y = !!variables_interes[i], paired = FALSE, type = &quot;np&quot;)
   
   test_localidad &lt;- rbind(test_localidad, test)
-}</code></pre>
-<pre><code>Adding missing grouping variables: `crop_code`, `nombre`</code></pre>
-<pre><code>Adding missing grouping variables: `crop_code`, `nombre`
-Adding missing grouping variables: `crop_code`, `nombre`
-Adding missing grouping variables: `crop_code`, `nombre`
-Adding missing grouping variables: `crop_code`, `nombre`
-Adding missing grouping variables: `crop_code`, `nombre`
-Adding missing grouping variables: `crop_code`, `nombre`
-Adding missing grouping variables: `crop_code`, `nombre`
-Adding missing grouping variables: `crop_code`, `nombre`
-Adding missing grouping variables: `crop_code`, `nombre`</code></pre>
-<pre class="r"><code>test_localidad &lt;- test_localidad %&gt;% rename(variable = parameter1)
+}
+
+test_localidad &lt;- test_localidad %&gt;% rename(variable = parameter1)
 
 
 forest_str_by_localidad &lt;- statby_localidad %&gt;% 
   pivot_wider(values_from = value, names_from = localidad) %&gt;% 
   inner_join(test_localidad) %&gt;% 
-  dplyr::select(-expression) </code></pre>
-<pre><code>Joining, by = &quot;variable&quot;</code></pre>
-<pre class="r"><code>forest_str_by_localidad %&gt;% 
+  dplyr::select(-expression) 
+
+forest_str_by_localidad %&gt;% 
   flextable(col_keys = c(&quot;variable&quot;,&quot;CANAR&quot;, &quot;SANJUAN&quot;, &quot;statistic&quot;, &quot;p.value&quot;)) %&gt;% 
   colformat_double(digits = 3)</code></pre>
-<template id="2773f363-fe56-4243-ae86-1358812c15c4"><style>
+<template id="fd79fc3d-583c-4ce7-a079-70a0b2e8930b"><style>
 .tabwid table{
   border-collapse:collapse;
   line-height:1;
@@ -820,11 +811,11 @@ forest_str_by_localidad &lt;- statby_localidad %&gt;%
 .tabwid table tr {
 background-color: transparent;
 }
-</style><div class="tabwid"><style>.cl-709e682c{border-collapse:collapse;}.cl-7096a8a8{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7096cc8e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7096ccb6{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-70971d1a{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-70971d38{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-70971d4c{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-70971d4d{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-70971d56{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-70971d60{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style><table class='cl-709e682c'><thead><tr style="overflow-wrap:break-word;"><td class="cl-70971d56"><p class="cl-7096cc8e"><span class="cl-7096a8a8">variable</span></p></td><td class="cl-70971d56"><p class="cl-7096cc8e"><span class="cl-7096a8a8">CANAR</span></p></td><td class="cl-70971d56"><p class="cl-7096cc8e"><span class="cl-7096a8a8">SANJUAN</span></p></td><td class="cl-70971d60"><p class="cl-7096ccb6"><span class="cl-7096a8a8">statistic</span></p></td><td class="cl-70971d60"><p class="cl-7096ccb6"><span class="cl-7096a8a8">p.value</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">per_qp</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">96.11 ± 1.28</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">100 ± 0</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">3.689</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.000</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">abundance</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">1671.11 ± 229.21</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">1587.5 ± 161.67</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.808</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.937</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">ab_juvenile</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">1004.44 ± 195.72</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">883.33 ± 127.18</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.852</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.767</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">ab_adult</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">584.44 ± 80.47</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">704.17 ± 63.31</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.449</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.178</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">tree_height_max</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">13.93 ± 0.65</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">13.75 ± 0.71</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.824</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.874</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">tree_height_mean</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">4.32 ± 0.6</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">5.09 ± 0.37</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.331</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.086</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">tree_height_median</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">3.19 ± 0.83</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">3.57 ± 0.66</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.564</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.353</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">tree_height_q75</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">5.73 ± 1.02</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">8.29 ± 0.6</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.344</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.092</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">tree_height_q90</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">10.07 ± 0.95</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">11.22 ± 0.54</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.605</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.440</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d4c"><p class="cl-7096cc8e"><span class="cl-7096a8a8">ba</span></p></td><td class="cl-70971d4c"><p class="cl-7096cc8e"><span class="cl-7096a8a8">37.56 ± 4.23</span></p></td><td class="cl-70971d4c"><p class="cl-7096cc8e"><span class="cl-7096a8a8">33.58 ± 3.6</span></p></td><td class="cl-70971d4d"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.913</span></p></td><td class="cl-70971d4d"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.540</span></p></td></tr></tbody></table></div></template>
-<div id="742ebfe8-e4c9-40d7-957f-ee55c0959287"></div>
+</style><div class="tabwid"><style>.cl-5fc0d444{border-collapse:collapse;}.cl-5fb8e892{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-5fb90a84{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5fb90aac{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5fb9589a{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5fb958b8{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5fb958c2{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5fb958cc{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5fb958d6{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5fb958e0{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style><table class='cl-5fc0d444'><thead><tr style="overflow-wrap:break-word;"><td class="cl-5fb958d6"><p class="cl-5fb90a84"><span class="cl-5fb8e892">variable</span></p></td><td class="cl-5fb958d6"><p class="cl-5fb90a84"><span class="cl-5fb8e892">CANAR</span></p></td><td class="cl-5fb958d6"><p class="cl-5fb90a84"><span class="cl-5fb8e892">SANJUAN</span></p></td><td class="cl-5fb958e0"><p class="cl-5fb90aac"><span class="cl-5fb8e892">statistic</span></p></td><td class="cl-5fb958e0"><p class="cl-5fb90aac"><span class="cl-5fb8e892">p.value</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">per_qp</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">96.11 ± 1.28</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">100 ± 0</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">3.689</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">0.000</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">abundance</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">1671.11 ± 229.21</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">1587.5 ± 161.67</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">4.808</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">0.937</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">ab_juvenile</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">1004.44 ± 195.72</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">883.33 ± 127.18</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">4.852</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">0.767</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">ab_adult</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">584.44 ± 80.47</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">704.17 ± 63.31</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">4.449</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">0.178</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">tree_height_max</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">13.93 ± 0.65</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">13.75 ± 0.71</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">4.824</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">0.874</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">tree_height_mean</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">4.32 ± 0.6</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">5.09 ± 0.37</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">4.331</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">0.086</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">tree_height_median</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">3.19 ± 0.83</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">3.57 ± 0.66</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">4.564</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">0.353</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">tree_height_q75</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">5.73 ± 1.02</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">8.29 ± 0.6</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">4.344</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">0.092</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">tree_height_q90</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">10.07 ± 0.95</span></p></td><td class="cl-5fb9589a"><p class="cl-5fb90a84"><span class="cl-5fb8e892">11.22 ± 0.54</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">4.605</span></p></td><td class="cl-5fb958b8"><p class="cl-5fb90aac"><span class="cl-5fb8e892">0.440</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5fb958c2"><p class="cl-5fb90a84"><span class="cl-5fb8e892">ba</span></p></td><td class="cl-5fb958c2"><p class="cl-5fb90a84"><span class="cl-5fb8e892">37.56 ± 4.23</span></p></td><td class="cl-5fb958c2"><p class="cl-5fb90a84"><span class="cl-5fb8e892">33.58 ± 3.6</span></p></td><td class="cl-5fb958cc"><p class="cl-5fb90aac"><span class="cl-5fb8e892">4.913</span></p></td><td class="cl-5fb958cc"><p class="cl-5fb90aac"><span class="cl-5fb8e892">0.540</span></p></td></tr></tbody></table></div></template>
+<div id="b6e33754-e41b-4cb4-bd1e-e8f466b58550"></div>
 <script>
-var dest = document.getElementById("742ebfe8-e4c9-40d7-957f-ee55c0959287");
-var template = document.getElementById("2773f363-fe56-4243-ae86-1358812c15c4");
+var dest = document.getElementById("b6e33754-e41b-4cb4-bd1e-e8f466b58550");
+var template = document.getElementById("fd79fc3d-583c-4ce7-a079-70a0b2e8930b");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -839,8 +830,9 @@ fantome.appendChild(templateContent);
 
 <pre class="r"><code>forest_str_by_localidad %&gt;% write_csv(here::here(&quot;data/forest_str_by_localidad.csv&quot;))</code></pre>
 </div>
-<div id="summary-by-crop" class="section level1">
-<h1>Summary by crop</h1>
+</div>
+<div id="get-summary-by-cropland" class="section level1">
+<h1>Get summary by cropland</h1>
 <pre class="r"><code>m &lt;- forest_str %&gt;% 
   group_by(crop_code) %&gt;% 
   summarise_at(vars(per_qp:ba), .funs = mean) %&gt;% 
@@ -853,9 +845,10 @@ s &lt;- forest_str %&gt;%
 
 statby_crop &lt;- m %&gt;% dplyr::inner_join(s) %&gt;% 
   mutate(across(where(is.numeric), round, 2)) %&gt;% 
-  unite(&quot;value&quot;, mean:se, sep=&quot; ± &quot;)</code></pre>
-<pre><code>Joining, by = c(&quot;crop_code&quot;, &quot;variable&quot;)</code></pre>
-<pre class="r"><code># Apply test 
+  unite(&quot;value&quot;, mean:se, sep=&quot; ± &quot;)
+
+
+# Apply test 
 variables_interes &lt;- forest_str %&gt;% ungroup %&gt;% dplyr::select(per_qp:ba) %&gt;% names()
 
 test_crop &lt;- c() 
@@ -866,33 +859,26 @@ for (i in 1:length(variables_interes)){
                   y = !!variables_interes[i], paired = FALSE, type = &quot;np&quot;)
   
   test_crop &lt;- rbind(test_crop, test)
-}</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`
-Adding missing grouping variables: `localidad`, `nombre`
-Adding missing grouping variables: `localidad`, `nombre`
-Adding missing grouping variables: `localidad`, `nombre`
-Adding missing grouping variables: `localidad`, `nombre`
-Adding missing grouping variables: `localidad`, `nombre`
-Adding missing grouping variables: `localidad`, `nombre`
-Adding missing grouping variables: `localidad`, `nombre`
-Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<pre class="r"><code>test_crop &lt;- test_crop %&gt;% rename(variable = parameter1)
+}
+
+
+test_crop &lt;- test_crop %&gt;% rename(variable = parameter1)
 
 
 forest_str_by_crop_code &lt;- statby_crop %&gt;% 
   pivot_wider(values_from = value, names_from = crop_code) %&gt;% 
   inner_join(test_crop) %&gt;% 
-  dplyr::select(-expression) </code></pre>
-<pre><code>Joining, by = &quot;variable&quot;</code></pre>
-<pre class="r"><code>forest_str_by_crop_code %&gt;%
+  dplyr::select(-expression) 
+
+
+forest_str_by_crop_code %&gt;%
   write_csv(here::here(&quot;data/forest_str_by_crop_code.csv&quot;))
 
 
 forest_str_by_crop_code %&gt;%  flextable(col_keys = c(&quot;variable&quot;,&quot;CA1&quot;,&quot;CA2&quot;,&quot;CA3&quot;,
                          &quot;SJ1&quot;,&quot;SJ2&quot;, &quot;statistic&quot;, &quot;p.value&quot;)) %&gt;% 
   colformat_double(digits = 3)</code></pre>
-<template id="5cde05f2-8cc1-4e57-be64-89233ea1f5db"><style>
+<template id="372ac0b9-c0c9-410f-9020-eb49ead7da2f"><style>
 .tabwid table{
   border-collapse:collapse;
   line-height:1;
@@ -926,11 +912,11 @@ forest_str_by_crop_code %&gt;%  flextable(col_keys = c(&quot;variable&quot;,&quo
 .tabwid table tr {
 background-color: transparent;
 }
-</style><div class="tabwid"><style>.cl-716ed836{border-collapse:collapse;}.cl-71680b64{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-716818a2{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-716818b6{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-71685a7e{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-71685a9c{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-71685aa6{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-71685ab0{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-71685aba{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-71685abb{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style><table class='cl-716ed836'><thead><tr style="overflow-wrap:break-word;"><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">variable</span></p></td><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">CA1</span></p></td><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">CA2</span></p></td><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">CA3</span></p></td><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">SJ1</span></p></td><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">SJ2</span></p></td><td class="cl-71685abb"><p class="cl-716818b6"><span class="cl-71680b64">statistic</span></p></td><td class="cl-71685abb"><p class="cl-716818b6"><span class="cl-71680b64">p.value</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">per_qp</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">99.14 ± 0.86</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">95.98 ± 1.41</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">93.32 ± 3.89</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">100 ± 0</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">100 ± 0</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">19.623</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.001</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">abundance</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">966.67 ± 241.91</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1547.62 ± 298.13</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">2591.67 ± 305.01</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1566.67 ± 246.91</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1600 ± 222.11</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">9.274</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.055</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">ab_juvenile</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">258.33 ± 157.75</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1066.67 ± 295.38</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1641.67 ± 130.08</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">905.56 ± 189.62</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">870 ± 176.34</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">10.507</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.033</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">ab_adult</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">700 ± 89.24</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">409.52 ± 65.75</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">775 ± 236.24</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">661.11 ± 90.85</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">730 ± 87.97</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">7.194</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.126</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">tree_height_max</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">12 ± 0.82</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">15 ± 0.98</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">14 ± 1.22</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">14.75 ± 1.09</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">13.15 ± 0.91</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">4.594</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.332</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">tree_height_mean</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">6.46 ± 1.47</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">3.64 ± 0.75</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">3.38 ± 0.35</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">5.01 ± 0.22</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">5.13 ± 0.59</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">8.142</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.087</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">tree_height_median</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">6.49 ± 1.48</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">2.07 ± 1.07</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1.88 ± 0.95</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">3.36 ± 0.55</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">3.69 ± 1.04</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">8.846</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.065</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">tree_height_q75</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">8.11 ± 1.81</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">5.56 ± 1.68</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">3.63 ± 1.29</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">7.79 ± 0.55</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">8.59 ± 0.91</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">6.204</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.184</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">tree_height_q90</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">9.56 ± 1.7</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">10.12 ± 1.73</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">10.5 ± 1.5</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">11.15 ± 0.78</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">11.27 ± 0.76</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">1.097</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.895</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">ba</span></p></td><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">32.72 ± 4.78</span></p></td><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">35.68 ± 6.51</span></p></td><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">45.68 ± 10.48</span></p></td><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">25.34 ± 3.98</span></p></td><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">38.52 ± 4.69</span></p></td><td class="cl-71685aa6"><p class="cl-716818b6"><span class="cl-71680b64">3.782</span></p></td><td class="cl-71685aa6"><p class="cl-716818b6"><span class="cl-71680b64">0.436</span></p></td></tr></tbody></table></div></template>
-<div id="e474226f-2d37-4893-b85b-cedf60d57512"></div>
+</style><div class="tabwid"><style>.cl-60febcb8{border-collapse:collapse;}.cl-60f25360{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-60f26b5c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-60f26b7a{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-60f2d664{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-60f2d682{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-60f2d696{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-60f2d6aa{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-60f2d6b4{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-60f2d6c8{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style><table class='cl-60febcb8'><thead><tr style="overflow-wrap:break-word;"><td class="cl-60f2d6b4"><p class="cl-60f26b5c"><span class="cl-60f25360">variable</span></p></td><td class="cl-60f2d6b4"><p class="cl-60f26b5c"><span class="cl-60f25360">CA1</span></p></td><td class="cl-60f2d6b4"><p class="cl-60f26b5c"><span class="cl-60f25360">CA2</span></p></td><td class="cl-60f2d6b4"><p class="cl-60f26b5c"><span class="cl-60f25360">CA3</span></p></td><td class="cl-60f2d6b4"><p class="cl-60f26b5c"><span class="cl-60f25360">SJ1</span></p></td><td class="cl-60f2d6b4"><p class="cl-60f26b5c"><span class="cl-60f25360">SJ2</span></p></td><td class="cl-60f2d6c8"><p class="cl-60f26b7a"><span class="cl-60f25360">statistic</span></p></td><td class="cl-60f2d6c8"><p class="cl-60f26b7a"><span class="cl-60f25360">p.value</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">per_qp</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">99.14 ± 0.86</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">95.98 ± 1.41</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">93.32 ± 3.89</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">100 ± 0</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">100 ± 0</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">19.623</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">0.001</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">abundance</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">966.67 ± 241.91</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">1547.62 ± 298.13</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">2591.67 ± 305.01</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">1566.67 ± 246.91</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">1600 ± 222.11</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">9.274</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">0.055</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">ab_juvenile</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">258.33 ± 157.75</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">1066.67 ± 295.38</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">1641.67 ± 130.08</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">905.56 ± 189.62</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">870 ± 176.34</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">10.507</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">0.033</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">ab_adult</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">700 ± 89.24</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">409.52 ± 65.75</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">775 ± 236.24</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">661.11 ± 90.85</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">730 ± 87.97</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">7.194</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">0.126</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">tree_height_max</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">12 ± 0.82</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">15 ± 0.98</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">14 ± 1.22</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">14.75 ± 1.09</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">13.15 ± 0.91</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">4.594</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">0.332</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">tree_height_mean</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">6.46 ± 1.47</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">3.64 ± 0.75</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">3.38 ± 0.35</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">5.01 ± 0.22</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">5.13 ± 0.59</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">8.142</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">0.087</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">tree_height_median</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">6.49 ± 1.48</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">2.07 ± 1.07</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">1.88 ± 0.95</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">3.36 ± 0.55</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">3.69 ± 1.04</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">8.846</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">0.065</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">tree_height_q75</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">8.11 ± 1.81</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">5.56 ± 1.68</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">3.63 ± 1.29</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">7.79 ± 0.55</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">8.59 ± 0.91</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">6.204</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">0.184</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">tree_height_q90</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">9.56 ± 1.7</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">10.12 ± 1.73</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">10.5 ± 1.5</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">11.15 ± 0.78</span></p></td><td class="cl-60f2d682"><p class="cl-60f26b5c"><span class="cl-60f25360">11.27 ± 0.76</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">1.097</span></p></td><td class="cl-60f2d664"><p class="cl-60f26b7a"><span class="cl-60f25360">0.895</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-60f2d6aa"><p class="cl-60f26b5c"><span class="cl-60f25360">ba</span></p></td><td class="cl-60f2d6aa"><p class="cl-60f26b5c"><span class="cl-60f25360">32.72 ± 4.78</span></p></td><td class="cl-60f2d6aa"><p class="cl-60f26b5c"><span class="cl-60f25360">35.68 ± 6.51</span></p></td><td class="cl-60f2d6aa"><p class="cl-60f26b5c"><span class="cl-60f25360">45.68 ± 10.48</span></p></td><td class="cl-60f2d6aa"><p class="cl-60f26b5c"><span class="cl-60f25360">25.34 ± 3.98</span></p></td><td class="cl-60f2d6aa"><p class="cl-60f26b5c"><span class="cl-60f25360">38.52 ± 4.69</span></p></td><td class="cl-60f2d696"><p class="cl-60f26b7a"><span class="cl-60f25360">3.782</span></p></td><td class="cl-60f2d696"><p class="cl-60f26b7a"><span class="cl-60f25360">0.436</span></p></td></tr></tbody></table></div></template>
+<div id="a02975e0-5e9a-42b5-bbbe-bf7ed33f1fc0"></div>
 <script>
-var dest = document.getElementById("e474226f-2d37-4893-b85b-cedf60d57512");
-var template = document.getElementById("5cde05f2-8cc1-4e57-be64-89233ea1f5db");
+var dest = document.getElementById("a02975e0-5e9a-42b5-bbbe-bf7ed33f1fc0");
+var template = document.getElementById("372ac0b9-c0c9-410f-9020-eb49ead7da2f");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -943,14 +929,15 @@ var templateContent = template.content;
 fantome.appendChild(templateContent);
 </script>
 
-<div id="per-qp" class="section level3">
-<h3>Per QP</h3>
+<div id="exploratory-plots-by-variable" class="section level2">
+<h2>Exploratory plots by variable</h2>
+<div id="composistion-q.-pyrenaica" class="section level3">
+<h3>Composistion (% <em>Q. pyrenaica</em>)</h3>
 <pre class="r"><code>ggbetweenstats(data = forest_str, x = crop_code,
                               type = &quot;np&quot;, pairwise.comparisons = TRUE, 
                               pairwise.display = &quot;s&quot;,
                               y = per_qp)</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="abundance" class="section level3">
 <h3>Abundance</h3>
@@ -958,8 +945,7 @@ fantome.appendChild(templateContent);
                               type = &quot;np&quot;, pairwise.comparisons = TRUE, 
                               pairwise.display = &quot;s&quot;,
                               y = abundance)</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="ab_juvenile" class="section level3">
 <h3>ab_juvenile</h3>
@@ -967,8 +953,44 @@ fantome.appendChild(templateContent);
                               type = &quot;np&quot;, pairwise.comparisons = TRUE, 
                               pairwise.display = &quot;s&quot;,
                               y = ab_juvenile)</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/d31b03c33618ea3c77df07276babc6d89c989872/docs/figure/compare_forest_structure.Rmd/unnamed-chunk-5-1.png" target="_blank">d31b03c</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="ab_adult" class="section level3">
 <h3>ab_adult</h3>
@@ -976,8 +998,44 @@ fantome.appendChild(templateContent);
                               type = &quot;np&quot;, pairwise.comparisons = TRUE, 
                               pairwise.display = &quot;s&quot;,
                               y = ab_adult)</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/d31b03c33618ea3c77df07276babc6d89c989872/docs/figure/compare_forest_structure.Rmd/unnamed-chunk-6-1.png" target="_blank">d31b03c</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="tree_height_max" class="section level3">
 <h3>tree_height_max</h3>
@@ -985,8 +1043,44 @@ fantome.appendChild(templateContent);
                               type = &quot;np&quot;, pairwise.comparisons = TRUE, 
                               pairwise.display = &quot;s&quot;,
                               y = tree_height_max)</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/d31b03c33618ea3c77df07276babc6d89c989872/docs/figure/compare_forest_structure.Rmd/unnamed-chunk-7-1.png" target="_blank">d31b03c</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="tree_height_mean" class="section level3">
 <h3>tree_height_mean</h3>
@@ -994,8 +1088,44 @@ fantome.appendChild(templateContent);
                               type = &quot;np&quot;, pairwise.comparisons = TRUE, 
                               pairwise.display = &quot;s&quot;,
                               y = tree_height_mean)</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/d31b03c33618ea3c77df07276babc6d89c989872/docs/figure/compare_forest_structure.Rmd/unnamed-chunk-8-1.png" target="_blank">d31b03c</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="tree_height_median" class="section level3">
 <h3>tree_height_median</h3>
@@ -1003,8 +1133,44 @@ fantome.appendChild(templateContent);
                               type = &quot;np&quot;, pairwise.comparisons = TRUE, 
                               pairwise.display = &quot;s&quot;,
                               y = tree_height_median)</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/d31b03c33618ea3c77df07276babc6d89c989872/docs/figure/compare_forest_structure.Rmd/unnamed-chunk-9-1.png" target="_blank">d31b03c</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="tree_height_q75" class="section level3">
 <h3>tree_height_q75</h3>
@@ -1012,8 +1178,44 @@ fantome.appendChild(templateContent);
                               type = &quot;np&quot;, pairwise.comparisons = TRUE, 
                               pairwise.display = &quot;s&quot;,
                               y = tree_height_q75)</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/d31b03c33618ea3c77df07276babc6d89c989872/docs/figure/compare_forest_structure.Rmd/unnamed-chunk-10-1.png" target="_blank">d31b03c</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="tree_height_q90" class="section level3">
 <h3>tree_height_q90</h3>
@@ -1021,8 +1223,44 @@ fantome.appendChild(templateContent);
                               type = &quot;np&quot;, pairwise.comparisons = TRUE, 
                               pairwise.display = &quot;s&quot;,
                               y = tree_height_q90)</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/d31b03c33618ea3c77df07276babc6d89c989872/docs/figure/compare_forest_structure.Rmd/unnamed-chunk-11-1.png" target="_blank">d31b03c</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="ba" class="section level3">
 <h3>ba</h3>
@@ -1030,8 +1268,44 @@ fantome.appendChild(templateContent);
                               type = &quot;np&quot;, pairwise.comparisons = TRUE, 
                               pairwise.display = &quot;s&quot;,
                               y = ba)</code></pre>
-<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
-<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/d31b03c33618ea3c77df07276babc6d89c989872/docs/figure/compare_forest_structure.Rmd/unnamed-chunk-12-1.png" target="_blank">d31b03c</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1124,6 +1398,7 @@ loaded via a namespace (and not attached):
 [117] coda_0.19-4               rmarkdown_2.8            
 [119] git2r_0.28.0              lubridate_1.7.10         
 [121] base64enc_0.1-3          </code></pre>
+</div>
 </div>
 </div>
 </div>
