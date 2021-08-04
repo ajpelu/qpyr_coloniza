@@ -30,6 +30,7 @@ library("performance")
 library("DHARMa")
 library("MuMIn")
 library("broom")
+library("gtsummary")
 ```
 
 ## Prepare Data 
@@ -308,16 +309,44 @@ ggsave(ab_interaction, filename = here::here("ms/juvenile_interaction.pdf"))
 ```
 
 
+### Summary values 
+```{r}
+qp %>% 
+  dplyr::select(ab, localidad) %>% 
+  tbl_summary(by = localidad,
+              label = list(ab ~ "Juvenile abundance"),
+              statistic = list(ab ~ "{mean} ({std.error})"),
+              digits = list(ab ~ c(2,2))) 
+```
+
+```{r}
+qp %>% 
+  dplyr::select(ab, tipo) %>% 
+  tbl_summary(by = tipo,
+              label = list(ab ~ "Juvenile abundance"),
+              statistic = list(ab ~ "{mean} ({std.error})"),
+              digits = list(ab ~ c(2,2))) 
+```
 
 
+```{r}
+qp %>% 
+  dplyr::select(tipo, localidad, ab) %>% 
+  tbl_strata(
+    strata =  localidad,
+    .tbl_fun =
+      ~.x %>%
+      tbl_summary(
+        by = tipo,
+        missing = "no",
+        label = list(ab ~ "Juvenile abundance"),
+        statistic = all_continuous() ~ "{mean} ({std.error})",
+        digits = everything() ~ 2
+      ))
+```
 
 
-
-
-
-
-
-- post hocs 
+### post hocs 
 ```{r}
 pairs(emmeans(mfull, c("tipo"), by="localidad")) %>% 
   data.frame() %>% 
