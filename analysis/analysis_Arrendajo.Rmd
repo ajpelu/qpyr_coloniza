@@ -129,7 +129,7 @@ garrulus_by_year %>%
 
 ## Exploratory Plot 
 
-```{r coloniza-garrulus, dev=c('png', 'pdf', 'svg', 'tiff')}
+```{r exploreGarrulus, dev=c('png', 'pdf', 'svg', 'tiff')}
 pos <- position_dodge(0.15)
 plot_garrulus <- garrulus_by_year %>% 
   rename(site = localidad) %>% 
