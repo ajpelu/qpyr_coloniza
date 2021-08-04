@@ -328,16 +328,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreec29d21b79c7cbacc079f42019ce79fcf2992ec66targetblankc29d21ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/c29d21b79c7cbacc079f42019ce79fcf2992ec66" target="_blank">c29d21b</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree62dbe3dc7c36721c23ac5b62042bbcd43009120ctargetblank62dbe3da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/62dbe3dc7c36721c23ac5b62042bbcd43009120c" target="_blank">62dbe3d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreec29d21b79c7cbacc079f42019ce79fcf2992ec66targetblankc29d21ba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree62dbe3dc7c36721c23ac5b62042bbcd43009120ctargetblank62dbe3da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/c29d21b79c7cbacc079f42019ce79fcf2992ec66" target="_blank">c29d21b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/62dbe3dc7c36721c23ac5b62042bbcd43009120c" target="_blank">62dbe3d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -352,6 +352,9 @@ Ignored files:
 Untracked files:
     Untracked:  analysis/HighstatLibV6.R
     Untracked:  analysis/figura_size_category.Rmd
+    Untracked:  analysis/scripts/
+    Untracked:  data/abundance_size_class.csv
+    Untracked:  data/abundance_tree_class.csv
     Untracked:  data/tabla_descriptivos_crops.csv
     Untracked:  ecology.csl
     Untracked:  glmulti.analysis.modgen.back
@@ -383,7 +386,10 @@ Unstaged changes:
     Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-7-1.png
     Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-8-1.png
     Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-9-1.png
-    Modified:   analysis/generaTabla_descriptivos_crops.R
+    Deleted:    analysis/compute_abundances.R
+    Deleted:    analysis/generaTabla_descriptivos_crops.R
+    Deleted:    analysis/preparaData_clasifica_trees.R
+    Deleted:    analysis/preparaData_transectos.R
     Modified:   data/forest_str_by_crop_code.csv
     Modified:   ms/ms_coloniza.Rmd
     Modified:   ms/ms_coloniza.pdf
@@ -426,6 +432,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/62dbe3dc7c36721c23ac5b62042bbcd43009120c/analysis/index.Rmd" target="_blank">62dbe3d</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+<td>
+include preparatory scripts
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/qpyr_coloniza/4d7c4fe9b9872d34d486500a43995a91b870bef4/docs/index.html" target="_blank">4d7c4fe</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -571,6 +611,7 @@ Start workflowr project.
 </div>
 <ul>
 <li><p><a href="flowchart.html">Flowcharts</a></p></li>
+<li><p><a href="preparatory_scripts.html">Preparatory scripts</a>. See also /analaysis/scripts (in the repository folder)</p></li>
 <li><p>Analyze abundance data of <a href="analysis_Arrendajo.html"><em>Garrulus glandarius</em></a></p></li>
 <li><p>Compare <a href="compare_forest_structure.html">forest structure</a> of the two study sites</p></li>
 <li><p>Modelling the <a href="analysis_juvenile_abundance.html">juvenile abundance</a> of Pyrenean oak</p></li>
