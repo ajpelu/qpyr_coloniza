@@ -1,0 +1,195 @@
+---
+title: "preparatory_scripts"
+author: "Antonio J Perez-Luque"
+date: "2021-08-04"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+We include some preparatory and auxiliar scripts
+
+```{r, pkg}
+library("tidyverse")
+library("sf")
+library("kableExtra")
+```
+
+
+## Compute abundances by class 
+
+```{r}
+# compute_abundances.R
+# read data 
+tree_data_crops <- read_csv("data/tree_data_crops.csv") %>% 
+  dplyr::select(nombre, tipo, altitud, localidad, tree_class, crop_code,
+                tree_type, diametro_base, altura, especie, size_category) 
+
+
+# abundance tree class (seedling, sapling, tree)
+# n individulas by 30x10 (--> to ind/100 m2); n*100/300 
+abundance_tree_class <- tree_data_crops %>% 
+  group_by(tree_class, nombre, especie, localidad, crop_code, tipo) %>% 
+  count() %>% 
+  mutate(n = n/3)
+
+write_csv(abundance_tree_class, "data/abundance_tree_class.csv")
+
+# abundance by size (30, 60, ...) 
+abundanbce_size_class <- tree_data_crops %>% 
+  group_by(size_category, nombre, especie, localidad, crop_code, tipo) %>% 
+  count() %>% 
+  mutate(n = n/3)
+
+write_csv(abundanbce_size_class, "data/abundance_size_class.csv")
+```
+
+## Genera descriptive table for crops
+
+```{r}
+# generaTabla_descriptivos_crops.R
+# Generate descriptive table for croplands
+crop_sp <- read_sf("data/geoinfo/aux_ajpelu_cultivos_56.shp") %>%
+    mutate(crop_code = case_when(
+      loc == "CANAR" & cultivo == "CULT_1" ~ "CA1",
+      loc == "CANAR" & cultivo == "CULT_2" ~ "CA2",
+      loc == "CANAR" & cultivo == "CULT_3" ~ "CA3",
+      loc == "SANJUAN" & cultivo == "CULT_1" ~ "SJ1",
+      loc == "SANJUAN" & cultivo == "CULT_2" ~ "SJ2"
+    ))
+  
+area <- crop_sp %>% 
+  st_set_geometry(NULL) %>% 
+  dplyr::select(crop_code, area=shape_area)
+  
+age <- read_csv("data/age_cultivos.csv")
+transectos <- read_csv("data/transectos_crops.csv")
+  
+# get minimun and maximum elevation 
+elev <- transectos %>% 
+  group_by(crop_code) %>% 
+  summarise(elev_min = min(altitud), 
+            elev_max = max(altitud)) %>% 
+  unite("elevation", elev_min, elev_max, sep = "-")
+
+# Get n of transects by crop code   
+ncrops <- transectos %>% 
+  group_by(crop_code, tipo) %>% 
+  count() %>% 
+  pivot_wider(names_from = tipo, values_from = n) %>% 
+  rename("Abandonment Cropland"="CLARO",
+         "Edge" = "CLARO_BORDE", 
+         "Forest" = "ROBLEDAL")
+  
+tabla_descriptivos_crops <- age %>% 
+  dplyr::select(-code, -cultivo, -subtipo) %>% 
+  inner_join(elev) %>% 
+  inner_join(area) %>% 
+  inner_join(ncrops) %>% 
+  mutate(area = round(area/10000, 2))
+  
+write_csv(tabla_descriptivos_crops, "data/tabla_descriptivos_crops.csv")
+```
+
+```{r}
+tabla_descriptivos_crops %>% 
+  kable() %>% kable_styling()
+```
+
+
+
+
+
+## Classify tree Data 
+```{r}
+# preparaData_clasifica_trees.R
+# Classify tree data
+
+raw_data <- read_csv("data/migrame_observations.csv")
+
+# filter data with NA in altura and NA in diametro base
+raw_data <- raw_data %>%
+  filter(!(is.na(altura) & is.na(diametro_base))) %>%
+  mutate(diametro_base = replace_na(diametro_base, 0))
+
+
+
+## Compute tree class based on Plieninger et al.
+# seedling_small h < 30
+# seedling_large 30 < h < 130
+# sapling_small h > 130 & dbh < 2.5
+# sapling_large h > 130 & dbh >= 2.5
+# tree_small 7.5 < dbh < 12.5
+# tree_medium 12.5 =< dbh < 22.5
+# tree_large dbh >= 22.5
+
+# Add variable of tree_class
+raw_data$tree_class <- ifelse(raw_data$diametro_base >= 22.5, "tree_large",
+  ifelse(raw_data$diametro_base >= 12.5, "tree_medium",
+    ifelse(raw_data$diametro_base >= 7.5, "tree_small",
+      ifelse(raw_data$diametro_base >= 2.5, "sapling_large",
+        ifelse(raw_data$diametro_base < 2.5 & raw_data$altura >= 130, "sapling_small",
+          ifelse(raw_data$diametro_base < 2.5 & raw_data$altura >= 30, "seedling_large", "seedling_small")
+        )
+      )
+    )
+  )
+)
+
+# Add variable of tree type (adult or juvenile)
+raw_data$tree_type <- ifelse(raw_data$tree_class %in% c("tree_large", "tree_medium", "tree_small"),
+  "adult", "juvenile"
+)
+
+# classify each 30 cm up to 150 and every 250 cm
+raw_data <- raw_data %>%
+  mutate(size_category = cut(altura,
+    breaks = c(-Inf, seq(30, 150, by = 30), seq(500, 2000, 250)),
+    labels = c(
+      paste0("size", seq(30, 150, 30)),
+      paste0("size", seq(500, 2000, 250))
+    )
+  ))
+
+# Use only data for our transects
+transectos_crops <- read_csv("data/transectos_crops.csv")
+
+
+tree_data_crops <- raw_data %>%
+  filter(nombre %in% transectos_crops$nombre) %>%
+  inner_join(
+    (transectos_crops %>%
+      dplyr::select(nombre, crop_code, localidad, tipo))
+  )
+
+write_csv(tree_data_crops, "data/tree_data_crops.csv")
+
+```
+
+
+## Prepara transect data 
+
+```{r}
+# preparaData_transectos.R 
+# Prepara datos cultivos 
+# Read transects data and assign crop code 
+
+transectos <- read_csv("data/info_replicates_transect.csv")
+transectos_crops <- 
+  transectos %>% 
+    mutate(crop_code = case_when(
+      localidad == "CANAR" & replicate == "R1" ~ "CA1",
+      localidad == "CANAR" & replicate == "R2" ~ "CA2",
+      localidad == "CANAR" & replicate == "R3" ~ "CA3",
+      localidad == "SANJUAN" & replicate == "R1" ~ "SJ1",
+      localidad == "SANJUAN" & replicate == "R2" ~ "SJ2"
+    )) 
+  
+write_csv(transectos_crops, "data/transectos_crops.csv")
+
+```
