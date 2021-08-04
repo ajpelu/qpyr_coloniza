@@ -478,16 +478,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree4f1f381d877995577b7ed31ea9d62518bcd379fetargetblank4f1f381a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/4f1f381d877995577b7ed31ea9d62518bcd379fe" target="_blank">4f1f381</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreee6f5b8727dda92818d14db4213046001443d7ed4targetblanke6f5b87a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/e6f5b8727dda92818d14db4213046001443d7ed4" target="_blank">e6f5b87</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree4f1f381d877995577b7ed31ea9d62518bcd379fetargetblank4f1f381a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreee6f5b8727dda92818d14db4213046001443d7ed4targetblanke6f5b87a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/4f1f381d877995577b7ed31ea9d62518bcd379fe" target="_blank">4f1f381</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/e6f5b8727dda92818d14db4213046001443d7ed4" target="_blank">e6f5b87</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -568,6 +568,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/e6f5b8727dda92818d14db4213046001443d7ed4/analysis/analysis_Arrendajo.Rmd" target="_blank">e6f5b87</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+<td>
+update tables
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/qpyr_coloniza/b39e0b4621dc94fd3f3f54105ffb4074b6eb1736/docs/analysis_Arrendajo.html" target="_blank">b39e0b4</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/ajpelu/qpyr_coloniza/blob/4f1f381d877995577b7ed31ea9d62518bcd379fe/analysis/analysis_Arrendajo.Rmd" target="_blank">4f1f381</a>
 </td>
 <td>
@@ -641,14 +675,14 @@ add analysis arrendajo;
 <pre class="r"><code>knitr::opts_chunk$set(echo = TRUE, 
                       warning = FALSE, 
                       message = FALSE)</code></pre>
-<div id="prepare-data" class="section level1">
-<h1>Prepare data</h1>
-<div id="data-sources" class="section level2">
-<h2>Data sources</h2>
+<div id="prepare-data" class="section level2">
+<h2>Prepare data</h2>
+<div id="data-sources" class="section level3">
+<h3>Data sources</h3>
 <p><em>Obsnev bird censuses</em> provided by <a href="https://obsnev.es/"><em>OBSNEV</em></a>, realized in several transects distributed along Sierra Nevada. Temporal range from 2008 to 2020. The data were downloaded from new information system of OBSNEV (<em>i.e.</em> PostgreSQL <a href="db01.obsnev.es">db01.obsnev.es</a>)</p>
 </div>
-<div id="prepare-obsnev-bird-censuses" class="section level2">
-<h2>Prepare OBSNEV bird censuses</h2>
+<div id="prepare-obsnev-bird-censuses" class="section level3">
+<h3>Prepare OBSNEV bird censuses</h3>
 <ul>
 <li><p>Raw data were downloaded from OBSNEV information system. The downloaded tables were: <code>contactos_paseriformes.csv</code>; <code>dicc_especies.csv</code>; <code>geo.csv</code>; <code>visitas.csv</code>.</p></li>
 <li><p>The protocol sampling number for passerine in the database is 5.</p></li>
@@ -716,8 +750,8 @@ df &lt;- dfraw %&gt;%
   - localidad: 2 entries, such as CANAR (n = 48); SANJUAN (n = 48); NA (0 missing)
   - den: n = 96, Mean = 1.63, SD = 1.37, Median = 1.19, MAD = 0.89, range: [0.52, 8.94], Skewness = 2.54, Kurtosis = 9.06, 0 missing</code></pre>
 </div>
-<div id="aggregate-data-by-year" class="section level2">
-<h2>Aggregate data by year</h2>
+<div id="aggregate-data-by-year" class="section level3">
+<h3>Aggregate data by year</h3>
 <ul>
 <li>Bird abundance (ind / 10 ha)</li>
 </ul>
@@ -732,6 +766,7 @@ garrulus_by_year %&gt;%
   formatRound(columns=c(&#39;mean&#39;, &#39;se&#39;), digits=2)</code></pre>
 <div id="htmlwidget-4b0fa985b6edad8071e7" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4b0fa985b6edad8071e7">{"x":{"filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2008\" data-max=\"2014\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.7775\" data-max=\"2.47538461538462\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.107517440445724\" data-max=\"0.87549757281217\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14"],["CANAR","CANAR","CANAR","CANAR","CANAR","CANAR","CANAR","SANJUAN","SANJUAN","SANJUAN","SANJUAN","SANJUAN","SANJUAN","SANJUAN"],[2008,2009,2010,2011,2012,2013,2014,2008,2009,2010,2011,2012,2013,2014],[2.47538461538462,1.1175,1.19,1.09333333333333,2.12857142857143,2.0125,1.79,1.26818181818182,0.86,1.20666666666667,1.97636363636364,2.274,0.932,0.7775],[0.606780718412085,0.207809579732435,null,0.283097941434487,0.673842671235824,0.584091938702413,0.376311041560037,0.213919348361259,0.107517440445725,0.318168369124134,0.399229423053218,0.87549757281217,0.301154445426263,0.2575],[13,8,1,6,7,8,5,11,6,6,11,5,5,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>localidad<\/th>\n      <th>year<\/th>\n      <th>mean<\/th>\n      <th>se<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\");\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\");\n  }"},{"className":"dt-right","targets":[2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
+</div>
 </div>
 <div id="exploratory-plot" class="section level2">
 <h2>Exploratory Plot</h2>
@@ -1029,6 +1064,43 @@ NA
                x=localidad, 
                y=den)</code></pre>
 <p><img src="figure/analysis_Arrendajo.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/b39e0b4621dc94fd3f3f54105ffb4074b6eb1736/docs/figure/analysis_Arrendajo.Rmd/unnamed-chunk-7-1.png" target="_blank">b39e0b4</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <ul>
 <li>Get mean values by locality</li>
 </ul>
@@ -1186,7 +1258,6 @@ loaded via a namespace (and not attached):
 [125] grid_4.0.2                coda_0.19-4              
 [127] rmarkdown_2.8             git2r_0.28.0             
 [129] base64enc_0.1-3           lubridate_1.7.10         </code></pre>
-</div>
 </div>
 </div>
 </div>
