@@ -472,16 +472,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreef0ba16390341106e9c8c9e18591454038c85eb56targetblankf0ba163a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/f0ba16390341106e9c8c9e18591454038c85eb56" target="_blank">f0ba163</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreef93569b6ab8676806e55e9ab61de6912febd2e05targetblankf93569ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/f93569b6ab8676806e55e9ab61de6912febd2e05" target="_blank">f93569b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreef0ba16390341106e9c8c9e18591454038c85eb56targetblankf0ba163a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreef93569b6ab8676806e55e9ab61de6912febd2e05targetblankf93569ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/f0ba16390341106e9c8c9e18591454038c85eb56" target="_blank">f0ba163</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/f93569b6ab8676806e55e9ab61de6912febd2e05" target="_blank">f93569b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -558,6 +558,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/f93569b6ab8676806e55e9ab61de6912febd2e05/analysis/flowchart.Rmd" target="_blank">f93569b</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+<td>
+add titles
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/qpyr_coloniza/b31d3de7b2e2848cfa837b203c053c7740bdc272/docs/flowchart.html" target="_blank">b31d3de</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/ajpelu/qpyr_coloniza/blob/f0ba16390341106e9c8c9e18591454038c85eb56/analysis/flowchart.Rmd" target="_blank">f0ba163</a>
 </td>
 <td>
@@ -611,6 +645,8 @@ add analysis
 </div>
 </div>
 </div>
+<div id="compute-abundances" class="section level2">
+<h2>Compute abundances</h2>
 <div id="htmlwidget-d35d7d63b25586afb80e" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
 <script type="application/json" data-for="htmlwidget-d35d7d63b25586afb80e">{"x":{"diagram":"\ngraph TD\n\n  a(info_replicates_transects.csv)\n  b[preparaData_transectos.R]\n  c(transectos_crops.csv)\n  d(aux_ajpelu_cultivos_56.shp) \n  e[generaTabla_descriptivos_crops.R]\n  f(age_cultivos.csv)\n  g(tabla_descriptivos_crops.csv)\n  h(migrame_observations.csv)\n  i[preparaData_clasifica_trees.R]\n  j(tree_data_crops.csv)\n  k[compute_abundances.R]\n  l(abundance_tree_class.csv)\n  m(abundance_size_class.csv)\n\n  a-->b\n  b-->|Assign crop code|c\n  d-->|Assign crop code|e\n  c-->e\n  f-->e\n  e-->|Compute n transects by crops<br>Get min, max elevation|g\n  h-->|Filter NA data<br>Select data for crops transects<br>Classify trees into juvenile, adult<br>Classify trees by size|i\n  c-->i\n  i-->j\n  j-->k\n\n  subgraph Compute Abundances\n  k-->|\"by tree class (seedling, sapling, etc)\"|l\n  k-->|\"by size class (30,90, ...)\"|m\n  end\n\n  classDef clasecsv fill:#f96\n  class a,c,f,g,h,j,l,m clasecsv\n\n  classDef proceso fill:#ededed,stroke:#333\n  class b,e,i,k proceso\n"},"evals":[],"jsHooks":[]}</script>
 <br>
@@ -648,6 +684,7 @@ FALSE [25] rprojroot_2.0.2    glue_1.4.2         R6_2.5.0           fansi_0.4.2
 FALSE [29] rmarkdown_2.8      magrittr_2.0.1     whisker_0.4        promises_1.2.0.1  
 FALSE [33] ellipsis_0.3.2     htmltools_0.5.1.1  httpuv_1.5.5       utf8_1.1.4        
 FALSE [37] stringi_1.5.3      visNetwork_2.0.9   crayon_1.4.1</code></pre>
+</div>
 </div>
 
 
