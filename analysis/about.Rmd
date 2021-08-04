@@ -7,4 +7,4 @@ editor_options:
   chunk_output_type: console
 ---
 
-Describe your project.
+The aim of this project is to analyze the colonization pattern of *Quercus pyrenaica* in mediterranean abandoned croplands. This work is part of the PhD thesis of Antonio J. Pérez-Luque. 
