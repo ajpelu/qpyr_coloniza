@@ -9,6 +9,7 @@ editor_options:
 ---
 
 - [Flowcharts](flowchart.html)
+- [Preparatory scripts](preparatory_scripts.html). See also /analaysis/scripts (in the repository folder)
 
 - Analyze abundance data of [*Garrulus glandarius*](analysis_Arrendajo.html)
 
