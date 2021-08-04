@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Compare Forest Structure</title>
+
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">qpyr_coloniza</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Compare Forest Structure</h1>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2021-08-04
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>qpyr_coloniza/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20210804code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20210804)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20210804code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20210804)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree3305bb3f5b66c41a458308df71bf0348afbb4187targetblank3305bb3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/3305bb3f5b66c41a458308df71bf0348afbb4187" target="_blank">3305bb3</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree3305bb3f5b66c41a458308df71bf0348afbb4187targetblank3305bb3a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/3305bb3f5b66c41a458308df71bf0348afbb4187" target="_blank">3305bb3</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .RData
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    images/
+
+Untracked files:
+    Untracked:  analysis/HighstatLibV6.R
+    Untracked:  analysis/analysis_juvenile_abundance.Rmd
+    Untracked:  analysis/figura_size_category.Rmd
+    Untracked:  data/tabla_descriptivos_crops.csv
+    Untracked:  ecology.csl
+    Untracked:  glmulti.analysis.modgen.back
+    Untracked:  glmulti.analysis.mods.back
+    Untracked:  ms/.DS_Store
+    Untracked:  ms/plot_tree_category.pdf
+    Untracked:  ms/table_anova.csv
+    Untracked:  ms/table_means.csv
+    Untracked:  ms/table_model_selection.csv
+
+Unstaged changes:
+    Deleted:    analysis/analysis_Arrendajo.md
+    Deleted:    analysis/analysis_Arrendajo_files/figure-gfm/coloniza-garrulus-1.pdf
+    Deleted:    analysis/analysis_Arrendajo_files/figure-gfm/coloniza-garrulus-1.png
+    Deleted:    analysis/analysis_Arrendajo_files/figure-gfm/coloniza-garrulus-1.svg
+    Deleted:    analysis/analysis_Arrendajo_files/figure-gfm/coloniza-garrulus-1.tiff
+    Deleted:    analysis/analysis_Arrendajo_files/figure-gfm/unnamed-chunk-6-1.png
+    Deleted:    analysis/compare_forest_structure.html
+    Deleted:    analysis/compare_forest_structure.md
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-10-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-11-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-12-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-13-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-14-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-5-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-6-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-7-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-8-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-9-1.png
+    Modified:   analysis/generaTabla_descriptivos_crops.R
+    Modified:   ms/ms_coloniza.Rmd
+    Modified:   ms/ms_coloniza.pdf
+    Modified:   ms/ms_coloniza.tex
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/compare_forest_structure.Rmd</code>) and HTML (<code>docs/compare_forest_structure.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/92d9b01d9c7a7c6c76a969c6e0d861d3ecbc0e86/analysis/compare_forest_structure.Rmd" target="_blank">92d9b01</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-06-08
+</td>
+<td>
+update output compare forests
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/4f20b9aef3043166752a2394e8b4263858c496ef/analysis/compare_forest_structure.Rmd" target="_blank">4f20b9a</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-06-08
+</td>
+<td>
+add analysis arrendajo;
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/9e51026ce1adade2a1a6bcbf255099aa7cf11594/analysis/compare_forest_structure.Rmd" target="_blank">9e51026</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-06-07
+</td>
+<td>
+analysis to compare forest structure
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>✓ ggplot2 3.3.3     ✓ purrr   0.3.4
+✓ tibble  3.1.2     ✓ dplyr   1.0.6
+✓ tidyr   1.1.3     ✓ stringr 1.4.0
+✓ readr   1.4.0     ✓ forcats 0.5.1</code></pre>
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(here)</code></pre>
+<pre><code>here() starts at /Users/ajpelu/Google Drive/_phd/03_colonization/qpyr_coloniza</code></pre>
+<pre class="r"><code>library(knitr)
+library(kableExtra)</code></pre>
+<pre><code>
+Attaching package: &#39;kableExtra&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    group_rows</code></pre>
+<pre class="r"><code>library(ggstatsplot)</code></pre>
+<pre><code>You can cite this package as:
+     Patil, I. (2021). Visualizations with statistical details: The &#39;ggstatsplot&#39; approach.
+     PsyArxiv. doi:10.31234/osf.io/p7mku</code></pre>
+<pre class="r"><code>library(statsExpressions)
+library(plotrix) #std.error 
+library(&quot;flextable&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;flextable&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:kableExtra&#39;:
+
+    as_image, footnote</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    compose</code></pre>
+<pre class="r"><code># Select data from forest
+# Remove data without values in altura field
+forest &lt;- read_csv(here::here(&quot;data/tree_data_crops.csv&quot;)) %&gt;% 
+  filter(tipo == &#39;ROBLEDAL&#39;) %&gt;% 
+  filter(!is.na(altura))  </code></pre>
+<pre><code>
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  .default = col_character(),
+  id = col_double(),
+  altitud = col_double(),
+  altura = col_double(),
+  eje_mayor = col_double(),
+  eje_menor = col_double(),
+  diametro_base = col_double(),
+  porcentaje_herbivoria = col_double(),
+  edad = col_double(),
+  cesped = col_logical(),
+  edad_interpolada = col_double()
+)
+ℹ Use `spec()` for the full column specifications.</code></pre>
+<ul>
+<li><p>Analisis no paramétrico para cada variable dependiente</p></li>
+<li><p>variables dependientes:</p>
+<ul>
+<li>[] abundancia total</li>
+<li>[] composicion (% de Q. pyrenaica)</li>
+<li>[] abundancia de juveniles</li>
+<li>[] media, mediana, max tree heigth</li>
+<li>[] BA (m2/ha)</li>
+</ul></li>
+</ul>
+<pre class="r"><code># composition and abundance (ind /ha)
+composition &lt;- forest %&gt;% 
+  group_by(crop_code, localidad, especie, nombre) %&gt;% 
+  count() %&gt;% 
+  pivot_wider(names_from = especie, values_from = n) %&gt;% 
+  rowwise() %&gt;% 
+  mutate(ntotal = sum(encina,roble, na.rm = TRUE),
+         per_qp = round(roble/ntotal*100, 2), 
+         per_qi = ifelse(
+           is.na(encina), 0, 
+           round(encina/ntotal*100, 2)), 
+         abundance = round(ntotal * 10000/300, 2)) 
+
+# abundance Qp (ind/ha)
+ab &lt;- forest %&gt;% 
+  group_by(crop_code, localidad, especie, nombre, tree_type) %&gt;% 
+  count() %&gt;% 
+  mutate(n = n*10000/300) %&gt;% 
+  pivot_wider(names_from = tree_type, values_from = n) 
+
+ab_roble &lt;- ab %&gt;% filter(especie==&quot;roble&quot;) %&gt;% 
+  mutate(ab_juvenile = replace_na(juvenile, 0),
+         ab_adult = replace_na(adult, 0)) %&gt;% 
+  dplyr::select(-juvenile, -adult,  -especie)</code></pre>
+<pre><code>Adding missing grouping variables: `especie`</code></pre>
+<pre class="r"><code># height
+tree_height &lt;- forest %&gt;% 
+  filter(especie == &quot;roble&quot;) %&gt;% 
+  group_by(crop_code, localidad, nombre) %&gt;% 
+  summarise(tree_height_max = max(altura, na.rm = TRUE)/100,
+            tree_height_mean = mean(altura, na.rm = TRUE)/100,
+            tree_height_median = median(altura, na.rm = TRUE)/100,
+            tree_height_q75 = quantile(altura, 0.75)/100,
+            tree_height_q90 = quantile(altura, 0.9)/100)</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;crop_code&#39;, &#39;localidad&#39;. You can override using the `.groups` argument.</code></pre>
+<pre class="r"><code># BASAL AREA (m2/ha)
+ba &lt;- forest %&gt;% 
+  filter(especie == &quot;roble&quot;) %&gt;% 
+  # filter(tree_type == &quot;adult&quot;) %&gt;% 
+  mutate(ba_tree = (pi*diametro_base*diametro_base)/40000) %&gt;% 
+  group_by(crop_code, localidad, nombre) %&gt;% 
+  summarise(ba = ((sum(ba_tree))*10000)/300)</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;crop_code&#39;, &#39;localidad&#39;. You can override using the `.groups` argument.</code></pre>
+<pre class="r"><code>forest_str &lt;- composition %&gt;% 
+  dplyr::select(crop_code, localidad, nombre, per_qp, abundance) %&gt;% 
+  inner_join(ab_roble) %&gt;% 
+  inner_join(tree_height) %&gt;% 
+  inner_join(ba) %&gt;% 
+  dplyr::select(-especie)</code></pre>
+<pre><code>Joining, by = c(&quot;crop_code&quot;, &quot;localidad&quot;, &quot;nombre&quot;)</code></pre>
+<pre><code>Joining, by = c(&quot;crop_code&quot;, &quot;localidad&quot;, &quot;nombre&quot;)
+Joining, by = c(&quot;crop_code&quot;, &quot;localidad&quot;, &quot;nombre&quot;)</code></pre>
+<pre class="r"><code>write_csv(forest_str, here::here(&quot;data/forest_structure.csv&quot;))</code></pre>
+<div id="summary-by-locality" class="section level1">
+<h1>Summary by locality</h1>
+<pre class="r"><code>ml &lt;- forest_str %&gt;% 
+  group_by(localidad) %&gt;% 
+  summarise_at(vars(per_qp:ba), .funs = mean) %&gt;% 
+  pivot_longer(per_qp:ba, names_to = &quot;variable&quot;, values_to = &quot;mean&quot;) 
+
+sl &lt;- forest_str %&gt;% 
+  group_by(localidad) %&gt;% 
+  summarise_at(vars(per_qp:ba), .funs = std.error) %&gt;% 
+  pivot_longer(per_qp:ba, names_to = &quot;variable&quot;, values_to = &quot;se&quot;) 
+
+statby_localidad &lt;- ml %&gt;% dplyr::inner_join(sl) %&gt;% 
+  mutate(across(where(is.numeric), round, 2)) %&gt;% 
+  unite(&quot;value&quot;, mean:se, sep=&quot; ± &quot;)</code></pre>
+<pre><code>Joining, by = c(&quot;localidad&quot;, &quot;variable&quot;)</code></pre>
+<pre class="r"><code># Apply test 
+variables_interes &lt;- forest_str %&gt;% ungroup %&gt;% dplyr::select(per_qp:ba) %&gt;% names()
+
+test_localidad &lt;- c() 
+
+for (i in 1:length(variables_interes)){
+  test &lt;- two_sample_test(data = forest_str, 
+                  x = localidad, 
+                  y = !!variables_interes[i], paired = FALSE, type = &quot;np&quot;)
+  
+  test_localidad &lt;- rbind(test_localidad, test)
+}</code></pre>
+<pre><code>Adding missing grouping variables: `crop_code`, `nombre`</code></pre>
+<pre><code>Adding missing grouping variables: `crop_code`, `nombre`
+Adding missing grouping variables: `crop_code`, `nombre`
+Adding missing grouping variables: `crop_code`, `nombre`
+Adding missing grouping variables: `crop_code`, `nombre`
+Adding missing grouping variables: `crop_code`, `nombre`
+Adding missing grouping variables: `crop_code`, `nombre`
+Adding missing grouping variables: `crop_code`, `nombre`
+Adding missing grouping variables: `crop_code`, `nombre`
+Adding missing grouping variables: `crop_code`, `nombre`</code></pre>
+<pre class="r"><code>test_localidad &lt;- test_localidad %&gt;% rename(variable = parameter1)
+
+
+forest_str_by_localidad &lt;- statby_localidad %&gt;% 
+  pivot_wider(values_from = value, names_from = localidad) %&gt;% 
+  inner_join(test_localidad) %&gt;% 
+  dplyr::select(-expression) </code></pre>
+<pre><code>Joining, by = &quot;variable&quot;</code></pre>
+<pre class="r"><code>forest_str_by_localidad %&gt;% 
+  flextable(col_keys = c(&quot;variable&quot;,&quot;CANAR&quot;, &quot;SANJUAN&quot;, &quot;statistic&quot;, &quot;p.value&quot;)) %&gt;% 
+  colformat_double(digits = 3)</code></pre>
+<template id="2773f363-fe56-4243-ae86-1358812c15c4"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style><div class="tabwid"><style>.cl-709e682c{border-collapse:collapse;}.cl-7096a8a8{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7096cc8e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7096ccb6{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-70971d1a{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-70971d38{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-70971d4c{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-70971d4d{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-70971d56{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-70971d60{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style><table class='cl-709e682c'><thead><tr style="overflow-wrap:break-word;"><td class="cl-70971d56"><p class="cl-7096cc8e"><span class="cl-7096a8a8">variable</span></p></td><td class="cl-70971d56"><p class="cl-7096cc8e"><span class="cl-7096a8a8">CANAR</span></p></td><td class="cl-70971d56"><p class="cl-7096cc8e"><span class="cl-7096a8a8">SANJUAN</span></p></td><td class="cl-70971d60"><p class="cl-7096ccb6"><span class="cl-7096a8a8">statistic</span></p></td><td class="cl-70971d60"><p class="cl-7096ccb6"><span class="cl-7096a8a8">p.value</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">per_qp</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">96.11 ± 1.28</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">100 ± 0</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">3.689</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.000</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">abundance</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">1671.11 ± 229.21</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">1587.5 ± 161.67</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.808</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.937</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">ab_juvenile</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">1004.44 ± 195.72</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">883.33 ± 127.18</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.852</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.767</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">ab_adult</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">584.44 ± 80.47</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">704.17 ± 63.31</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.449</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.178</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">tree_height_max</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">13.93 ± 0.65</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">13.75 ± 0.71</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.824</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.874</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">tree_height_mean</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">4.32 ± 0.6</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">5.09 ± 0.37</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.331</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.086</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">tree_height_median</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">3.19 ± 0.83</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">3.57 ± 0.66</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.564</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.353</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">tree_height_q75</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">5.73 ± 1.02</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">8.29 ± 0.6</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.344</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.092</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">tree_height_q90</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">10.07 ± 0.95</span></p></td><td class="cl-70971d1a"><p class="cl-7096cc8e"><span class="cl-7096a8a8">11.22 ± 0.54</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.605</span></p></td><td class="cl-70971d38"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.440</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-70971d4c"><p class="cl-7096cc8e"><span class="cl-7096a8a8">ba</span></p></td><td class="cl-70971d4c"><p class="cl-7096cc8e"><span class="cl-7096a8a8">37.56 ± 4.23</span></p></td><td class="cl-70971d4c"><p class="cl-7096cc8e"><span class="cl-7096a8a8">33.58 ± 3.6</span></p></td><td class="cl-70971d4d"><p class="cl-7096ccb6"><span class="cl-7096a8a8">4.913</span></p></td><td class="cl-70971d4d"><p class="cl-7096ccb6"><span class="cl-7096a8a8">0.540</span></p></td></tr></tbody></table></div></template>
+<div id="742ebfe8-e4c9-40d7-957f-ee55c0959287"></div>
+<script>
+var dest = document.getElementById("742ebfe8-e4c9-40d7-957f-ee55c0959287");
+var template = document.getElementById("2773f363-fe56-4243-ae86-1358812c15c4");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+<pre class="r"><code>forest_str_by_localidad %&gt;% write_csv(here::here(&quot;data/forest_str_by_localidad.csv&quot;))</code></pre>
+</div>
+<div id="summary-by-crop" class="section level1">
+<h1>Summary by crop</h1>
+<pre class="r"><code>m &lt;- forest_str %&gt;% 
+  group_by(crop_code) %&gt;% 
+  summarise_at(vars(per_qp:ba), .funs = mean) %&gt;% 
+  pivot_longer(per_qp:ba, names_to = &quot;variable&quot;, values_to = &quot;mean&quot;) 
+
+s &lt;- forest_str %&gt;% 
+  group_by(crop_code) %&gt;% 
+  summarise_at(vars(per_qp:ba), .funs = std.error) %&gt;% 
+  pivot_longer(per_qp:ba, names_to = &quot;variable&quot;, values_to = &quot;se&quot;) 
+
+statby_crop &lt;- m %&gt;% dplyr::inner_join(s) %&gt;% 
+  mutate(across(where(is.numeric), round, 2)) %&gt;% 
+  unite(&quot;value&quot;, mean:se, sep=&quot; ± &quot;)</code></pre>
+<pre><code>Joining, by = c(&quot;crop_code&quot;, &quot;variable&quot;)</code></pre>
+<pre class="r"><code># Apply test 
+variables_interes &lt;- forest_str %&gt;% ungroup %&gt;% dplyr::select(per_qp:ba) %&gt;% names()
+
+test_crop &lt;- c() 
+
+for (i in 1:length(variables_interes)){
+  test &lt;- oneway_anova(data = forest_str, 
+                  x = crop_code, 
+                  y = !!variables_interes[i], paired = FALSE, type = &quot;np&quot;)
+  
+  test_crop &lt;- rbind(test_crop, test)
+}</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`
+Adding missing grouping variables: `localidad`, `nombre`
+Adding missing grouping variables: `localidad`, `nombre`
+Adding missing grouping variables: `localidad`, `nombre`
+Adding missing grouping variables: `localidad`, `nombre`
+Adding missing grouping variables: `localidad`, `nombre`
+Adding missing grouping variables: `localidad`, `nombre`
+Adding missing grouping variables: `localidad`, `nombre`
+Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<pre class="r"><code>test_crop &lt;- test_crop %&gt;% rename(variable = parameter1)
+
+
+forest_str_by_crop_code &lt;- statby_crop %&gt;% 
+  pivot_wider(values_from = value, names_from = crop_code) %&gt;% 
+  inner_join(test_crop) %&gt;% 
+  dplyr::select(-expression) </code></pre>
+<pre><code>Joining, by = &quot;variable&quot;</code></pre>
+<pre class="r"><code>forest_str_by_crop_code %&gt;%
+  write_csv(here::here(&quot;data/forest_str_by_crop_code.csv&quot;))
+
+
+forest_str_by_crop_code %&gt;%  flextable(col_keys = c(&quot;variable&quot;,&quot;CA1&quot;,&quot;CA2&quot;,&quot;CA3&quot;,
+                         &quot;SJ1&quot;,&quot;SJ2&quot;, &quot;statistic&quot;, &quot;p.value&quot;)) %&gt;% 
+  colformat_double(digits = 3)</code></pre>
+<template id="5cde05f2-8cc1-4e57-be64-89233ea1f5db"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style><div class="tabwid"><style>.cl-716ed836{border-collapse:collapse;}.cl-71680b64{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-716818a2{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-716818b6{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-71685a7e{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-71685a9c{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-71685aa6{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-71685ab0{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-71685aba{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-71685abb{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style><table class='cl-716ed836'><thead><tr style="overflow-wrap:break-word;"><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">variable</span></p></td><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">CA1</span></p></td><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">CA2</span></p></td><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">CA3</span></p></td><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">SJ1</span></p></td><td class="cl-71685aba"><p class="cl-716818a2"><span class="cl-71680b64">SJ2</span></p></td><td class="cl-71685abb"><p class="cl-716818b6"><span class="cl-71680b64">statistic</span></p></td><td class="cl-71685abb"><p class="cl-716818b6"><span class="cl-71680b64">p.value</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">per_qp</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">99.14 ± 0.86</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">95.98 ± 1.41</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">93.32 ± 3.89</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">100 ± 0</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">100 ± 0</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">19.623</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.001</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">abundance</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">966.67 ± 241.91</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1547.62 ± 298.13</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">2591.67 ± 305.01</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1566.67 ± 246.91</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1600 ± 222.11</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">9.274</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.055</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">ab_juvenile</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">258.33 ± 157.75</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1066.67 ± 295.38</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1641.67 ± 130.08</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">905.56 ± 189.62</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">870 ± 176.34</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">10.507</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.033</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">ab_adult</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">700 ± 89.24</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">409.52 ± 65.75</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">775 ± 236.24</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">661.11 ± 90.85</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">730 ± 87.97</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">7.194</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.126</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">tree_height_max</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">12 ± 0.82</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">15 ± 0.98</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">14 ± 1.22</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">14.75 ± 1.09</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">13.15 ± 0.91</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">4.594</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.332</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">tree_height_mean</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">6.46 ± 1.47</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">3.64 ± 0.75</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">3.38 ± 0.35</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">5.01 ± 0.22</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">5.13 ± 0.59</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">8.142</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.087</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">tree_height_median</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">6.49 ± 1.48</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">2.07 ± 1.07</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">1.88 ± 0.95</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">3.36 ± 0.55</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">3.69 ± 1.04</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">8.846</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.065</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">tree_height_q75</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">8.11 ± 1.81</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">5.56 ± 1.68</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">3.63 ± 1.29</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">7.79 ± 0.55</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">8.59 ± 0.91</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">6.204</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.184</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">tree_height_q90</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">9.56 ± 1.7</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">10.12 ± 1.73</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">10.5 ± 1.5</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">11.15 ± 0.78</span></p></td><td class="cl-71685a9c"><p class="cl-716818a2"><span class="cl-71680b64">11.27 ± 0.76</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">1.097</span></p></td><td class="cl-71685a7e"><p class="cl-716818b6"><span class="cl-71680b64">0.895</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">ba</span></p></td><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">32.72 ± 4.78</span></p></td><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">35.68 ± 6.51</span></p></td><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">45.68 ± 10.48</span></p></td><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">25.34 ± 3.98</span></p></td><td class="cl-71685ab0"><p class="cl-716818a2"><span class="cl-71680b64">38.52 ± 4.69</span></p></td><td class="cl-71685aa6"><p class="cl-716818b6"><span class="cl-71680b64">3.782</span></p></td><td class="cl-71685aa6"><p class="cl-716818b6"><span class="cl-71680b64">0.436</span></p></td></tr></tbody></table></div></template>
+<div id="e474226f-2d37-4893-b85b-cedf60d57512"></div>
+<script>
+var dest = document.getElementById("e474226f-2d37-4893-b85b-cedf60d57512");
+var template = document.getElementById("5cde05f2-8cc1-4e57-be64-89233ea1f5db");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+<div id="per-qp" class="section level3">
+<h3>Per QP</h3>
+<pre class="r"><code>ggbetweenstats(data = forest_str, x = crop_code,
+                              type = &quot;np&quot;, pairwise.comparisons = TRUE, 
+                              pairwise.display = &quot;s&quot;,
+                              y = per_qp)</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="abundance" class="section level3">
+<h3>Abundance</h3>
+<pre class="r"><code>ggbetweenstats(data = forest_str, x = crop_code,
+                              type = &quot;np&quot;, pairwise.comparisons = TRUE, 
+                              pairwise.display = &quot;s&quot;,
+                              y = abundance)</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ab_juvenile" class="section level3">
+<h3>ab_juvenile</h3>
+<pre class="r"><code>ggbetweenstats(data = forest_str, x = crop_code,
+                              type = &quot;np&quot;, pairwise.comparisons = TRUE, 
+                              pairwise.display = &quot;s&quot;,
+                              y = ab_juvenile)</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ab_adult" class="section level3">
+<h3>ab_adult</h3>
+<pre class="r"><code>ggbetweenstats(data = forest_str, x = crop_code,
+                              type = &quot;np&quot;, pairwise.comparisons = TRUE, 
+                              pairwise.display = &quot;s&quot;,
+                              y = ab_adult)</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tree_height_max" class="section level3">
+<h3>tree_height_max</h3>
+<pre class="r"><code>ggbetweenstats(data = forest_str, x = crop_code,
+                              type = &quot;np&quot;, pairwise.comparisons = TRUE, 
+                              pairwise.display = &quot;s&quot;,
+                              y = tree_height_max)</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tree_height_mean" class="section level3">
+<h3>tree_height_mean</h3>
+<pre class="r"><code>ggbetweenstats(data = forest_str, x = crop_code,
+                              type = &quot;np&quot;, pairwise.comparisons = TRUE, 
+                              pairwise.display = &quot;s&quot;,
+                              y = tree_height_mean)</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tree_height_median" class="section level3">
+<h3>tree_height_median</h3>
+<pre class="r"><code>ggbetweenstats(data = forest_str, x = crop_code,
+                              type = &quot;np&quot;, pairwise.comparisons = TRUE, 
+                              pairwise.display = &quot;s&quot;,
+                              y = tree_height_median)</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tree_height_q75" class="section level3">
+<h3>tree_height_q75</h3>
+<pre class="r"><code>ggbetweenstats(data = forest_str, x = crop_code,
+                              type = &quot;np&quot;, pairwise.comparisons = TRUE, 
+                              pairwise.display = &quot;s&quot;,
+                              y = tree_height_q75)</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tree_height_q90" class="section level3">
+<h3>tree_height_q90</h3>
+<pre class="r"><code>ggbetweenstats(data = forest_str, x = crop_code,
+                              type = &quot;np&quot;, pairwise.comparisons = TRUE, 
+                              pairwise.display = &quot;s&quot;,
+                              y = tree_height_q90)</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ba" class="section level3">
+<h3>ba</h3>
+<pre class="r"><code>ggbetweenstats(data = forest_str, x = crop_code,
+                              type = &quot;np&quot;, pairwise.comparisons = TRUE, 
+                              pairwise.display = &quot;s&quot;,
+                              y = ba)</code></pre>
+<pre><code>Adding missing grouping variables: `localidad`, `nombre`</code></pre>
+<p><img src="figure/compare_forest_structure.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.2 (2020-06-22)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.3
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] flextable_0.6.3        plotrix_3.8-1          statsExpressions_1.1.0
+ [4] ggstatsplot_0.7.2      kableExtra_1.3.1       knitr_1.31            
+ [7] here_1.0.1             forcats_0.5.1          stringr_1.4.0         
+[10] dplyr_1.0.6            purrr_0.3.4            readr_1.4.0           
+[13] tidyr_1.1.3            tibble_3.1.2           ggplot2_3.3.3         
+[16] tidyverse_1.3.1        workflowr_1.6.2       
+
+loaded via a namespace (and not attached):
+  [1] readxl_1.3.1              uuid_0.1-4               
+  [3] pairwiseComparisons_3.1.3 backports_1.2.1          
+  [5] systemfonts_1.0.0         plyr_1.8.6               
+  [7] splines_4.0.2             gmp_0.6-2                
+  [9] kSamples_1.2-9            ipmisc_5.0.2             
+ [11] TH.data_1.0-10            digest_0.6.27            
+ [13] SuppDists_1.1-9.5         htmltools_0.5.1.1        
+ [15] fansi_0.4.2               magrittr_2.0.1           
+ [17] memoise_2.0.0             paletteer_1.3.0          
+ [19] modelr_0.1.8              officer_0.3.16           
+ [21] sandwich_3.0-0            colorspace_2.0-0         
+ [23] rvest_1.0.0               ggrepel_0.9.1            
+ [25] haven_2.3.1               xfun_0.23                
+ [27] prismatic_1.0.0           crayon_1.4.1             
+ [29] jsonlite_1.7.2            zeallot_0.1.0            
+ [31] survival_3.2-7            zoo_1.8-8                
+ [33] glue_1.4.2                gtable_0.3.0             
+ [35] emmeans_1.5.4             webshot_0.5.2            
+ [37] MatrixModels_0.4-1        Rmpfr_0.8-2              
+ [39] scales_1.1.1              mvtnorm_1.1-1            
+ [41] DBI_1.1.1                 PMCMRplus_1.9.0          
+ [43] Rcpp_1.0.6                viridisLite_0.3.0        
+ [45] xtable_1.8-4              performance_0.7.2        
+ [47] httr_1.4.2                ellipsis_0.3.2           
+ [49] farver_2.0.3              pkgconfig_2.0.3          
+ [51] reshape_0.8.8             multcompView_0.1-8       
+ [53] sass_0.3.1                dbplyr_2.1.1             
+ [55] utf8_1.1.4                tidyselect_1.1.0         
+ [57] labeling_0.4.2            rlang_0.4.10             
+ [59] later_1.1.0.1             ggcorrplot_0.1.3         
+ [61] effectsize_0.4.5          munsell_0.5.0            
+ [63] cellranger_1.1.0          tools_4.0.2              
+ [65] cachem_1.0.4              cli_2.5.0                
+ [67] generics_0.1.0            broom_0.7.6              
+ [69] evaluate_0.14             fastmap_1.1.0            
+ [71] BWStest_0.2.2             yaml_2.2.1               
+ [73] rematch2_2.1.2            fs_1.5.0                 
+ [75] zip_2.1.1                 WRS2_1.1-1               
+ [77] pbapply_1.4-3             whisker_0.4              
+ [79] xml2_1.3.2                correlation_0.6.1        
+ [81] compiler_4.0.2            rstudioapi_0.13          
+ [83] ggsignif_0.6.0            reprex_2.0.0             
+ [85] bslib_0.2.4               stringi_1.5.3            
+ [87] highr_0.8                 parameters_0.14.0        
+ [89] gdtools_0.2.3             lattice_0.20-41          
+ [91] Matrix_1.3-2              vctrs_0.3.8              
+ [93] pillar_1.6.1              lifecycle_1.0.0          
+ [95] mc2d_0.1-18               jquerylib_0.1.3          
+ [97] estimability_1.3          data.table_1.13.6        
+ [99] insight_0.14.1            httpuv_1.5.5             
+[101] patchwork_1.1.1           R6_2.5.0                 
+[103] promises_1.2.0.1          BayesFactor_0.9.12-4.2   
+[105] codetools_0.2-18          boot_1.3-26              
+[107] MASS_7.3-53               gtools_3.8.2             
+[109] assertthat_0.2.1          rprojroot_2.0.2          
+[111] withr_2.4.1               multcomp_1.4-16          
+[113] bayestestR_0.9.0          parallel_4.0.2           
+[115] hms_1.0.0                 grid_4.0.2               
+[117] coda_0.19-4               rmarkdown_2.8            
+[119] git2r_0.28.0              lubridate_1.7.10         
+[121] base64enc_0.1-3          </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
