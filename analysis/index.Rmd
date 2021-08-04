@@ -13,3 +13,5 @@ editor_options:
 - Analyze abundance data of [*Garrulus glandarius*](analysis_Arrendajo.html)
 
 - Compare [forest structure](compare_forest_structure.html) of the two study sites
+
+- Modelling the [juvenile abundance](analysis_juvenile_abundance.html) of Pyrenean oak
