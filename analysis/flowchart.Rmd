@@ -1,9 +1,16 @@
 ---
-title: "schema"
+title: "Flowcharts"
 output: html_document
 editor_options: 
   chunk_output_type: console
 ---
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, comment = FALSE, message = FALSE
+)
+```
+
 
 ```{r}
 library("DiagrammeR")
