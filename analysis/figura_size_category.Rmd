@@ -1,0 +1,100 @@
+---
+title: "Plot by size structure"
+output: 
+  html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(here)
+library(knitr)
+library(plotrix)
+```
+
+```{r}
+d <- read_csv(here::here("data/tree_data_crops.csv"))
+
+df_roble <- d %>% filter(especie == "roble") %>% 
+  dplyr::select(localidad, nombre, tipo, tree_class:crop_code) %>% 
+  mutate(tipo = case_when(
+    tipo == "CLARO" ~  "Cropland",
+    tipo == "CLARO_BORDE" ~ "Edge",
+    tipo == "ROBLEDAL" ~ "Forest"
+  ))
+```
+
+# Plot by size category (all trees)
+```{r}
+# Get nº ind /100m2 by size_category
+df_summary <- df_roble %>% 
+  group_by(nombre, localidad, tipo, size_category, crop_code) %>% 
+  count() %>% 
+  mutate(abun = round(n * 100/300, 2))
+
+df_mean <- df_summary %>% 
+  group_by(localidad, tipo, size_category) %>% 
+  summarise(
+    mean = mean(abun, na.rm = TRUE),
+    se = plotrix::std.error(abun, na.rm=TRUE)
+  )
+```
+
+```{r, ploTreeSizes, dev=c('png', 'pdf', 'svg', 'tiff')}
+micolor <- '#222943'
+
+plot_tree_category <- df_mean %>% 
+  mutate(sizeCat = as.numeric(str_replace(size_category, "size", ""))) %>%
+  filter(sizeCat < 160) %>% 
+  ggplot(aes(x=sizeCat, y=mean)) +
+  geom_bar(stat="identity", fill = micolor) + 
+  geom_errorbar(
+    aes(ymin=mean-se, ymax = mean + se), 
+    colour = micolor, width = 8, size = .3) + 
+  facet_grid(localidad ~ tipo) +
+  scale_x_continuous(breaks = c(30,60,90,120,150)) +
+  theme_bw() + 
+  theme(
+    panel.grid = element_blank(), 
+    strip.background = element_rect(fill="transparent", 
+                                    color = "transparent")) + 
+  labs(x='Tree height (cm)', 
+       y=expression(paste('Abundance (ind/100 ', m^2,')', sep="")))
+
+print(plot_tree_category)
+```
+
+```{r}
+ggsave(plot_tree_category, 
+       filename = here::here("images/plot_tree_category.pdf"))
+```
+
+
+## Generate statistics 
+- Filter tree height < 150 
+- Group by site and habitat type 
+
+```{r}
+df_roble %>% 
+  mutate(sizeCat = as.numeric(str_replace(size_category, "size", ""))) %>%
+  filter(sizeCat < 160) %>% 
+  group_by(localidad, nombre, tipo) %>% 
+  count() %>% 
+  mutate(abun = round(n * 100/300, 2))
+
+
+```
+
+
+
+
+
+
+
+
+
