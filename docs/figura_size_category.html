@@ -464,16 +464,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree998faa5282b6ac015b1e0ad6d2f23627f6901329targetblank998faa5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/998faa5282b6ac015b1e0ad6d2f23627f6901329" target="_blank">998faa5</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreeb92a33c626df2a446f846ce5ee2aae39205d2aactargetblankb92a33ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/b92a33c626df2a446f846ce5ee2aae39205d2aac" target="_blank">b92a33c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatree998faa5282b6ac015b1e0ad6d2f23627f6901329targetblank998faa5a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreeb92a33c626df2a446f846ce5ee2aae39205d2aactargetblankb92a33ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/998faa5282b6ac015b1e0ad6d2f23627f6901329" target="_blank">998faa5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/b92a33c626df2a446f846ce5ee2aae39205d2aac" target="_blank">b92a33c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -572,6 +572,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/b92a33c626df2a446f846ce5ee2aae39205d2aac/analysis/figura_size_category.Rmd" target="_blank">b92a33c</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+<td>
+add figura
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/qpyr_coloniza/88671036e52e3fa56321edf8817adfe8305e9df0/docs/figura_size_category.html" target="_blank">8867103</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/ajpelu/qpyr_coloniza/blob/998faa5282b6ac015b1e0ad6d2f23627f6901329/analysis/figura_size_category.Rmd" target="_blank">998faa5</a>
 </td>
 <td>
@@ -604,8 +638,8 @@ df_roble &lt;- d %&gt;% filter(especie == &quot;roble&quot;) %&gt;%
     tipo == &quot;CLARO_BORDE&quot; ~ &quot;Edge&quot;,
     tipo == &quot;ROBLEDAL&quot; ~ &quot;Forest&quot;
   ))</code></pre>
-<div id="plot-by-size-category-all-trees" class="section level1">
-<h1>Plot by size category (all trees)</h1>
+<div id="plot-by-size-category-only-juveniles" class="section level1">
+<h1>Plot by size category (only juveniles)</h1>
 <pre class="r"><code># Get nº ind /100m2 by size_category
 df_summary &lt;- df_roble %&gt;% 
   group_by(nombre, localidad, tipo, size_category, crop_code) %&gt;% 
@@ -618,7 +652,8 @@ df_mean &lt;- df_summary %&gt;%
     mean = mean(abun, na.rm = TRUE),
     se = plotrix::std.error(abun, na.rm=TRUE)
   )</code></pre>
-<pre class="r"><code>micolor &lt;- &#39;#222943&#39;
+<pre class="r"><code># micolor &lt;- &#39;#222943&#39; #oldblue
+micolor &lt;- &#39;#007EE3&#39;
 
 plot_tree_category &lt;- df_mean %&gt;% 
   mutate(sizeCat = as.numeric(str_replace(size_category, &quot;size&quot;, &quot;&quot;))) %&gt;%
@@ -640,6 +675,43 @@ plot_tree_category &lt;- df_mean %&gt;%
 
 print(plot_tree_category)</code></pre>
 <p><img src="figure/figura_size_category.Rmd/ploTreeSizes-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-ploTreeSizes-1">
+Past versions of ploTreeSizes-1.png
+</button>
+</p>
+<div id="fig-ploTreeSizes-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/88671036e52e3fa56321edf8817adfe8305e9df0/docs/figure/figura_size_category.Rmd/ploTreeSizes-1.png" target="_blank">8867103</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggsave(plot_tree_category, 
        filename = here::here(&quot;images/plot_tree_category.pdf&quot;))</code></pre>
 <div id="generate-statistics" class="section level2">
