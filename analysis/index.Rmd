@@ -11,3 +11,5 @@ editor_options:
 - [Flowcharts](flowchart.html)
 
 - Analyze abundance data of [*Garrulus glandarius*](analysis_Arrendajo.html)
+
+- Compare [forest structure](compare_forest_structure.html) of the two study sites
