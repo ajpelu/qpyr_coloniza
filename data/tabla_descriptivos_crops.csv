@@ -1,0 +1,6 @@
+loc,loc_code,crop_code,age_range,age,elevation,area,Abandonment Cropland,Edge,Forest
+Robledal de Cáñar,CA,CA1,> 60,65,1796-1866,3.29,6,3,4
+Robledal de Cáñar,CA,CA2,< 30,25,1789-1858,5.8,9,3,7
+Robledal de Cáñar,CA,CA3,40 - 60,50,1851-1892,1.56,3,3,4
+Robledal de San Juan,SJ,SJ1,40 - 60,50,1507-1674,3.47,6,3,6
+Robledal de San Juan,SJ,SJ2,30 - 40,35,1575-1746,10.36,13,3,10

@@ -42,7 +42,7 @@ tabla_descriptivos_crops <- age %>%
   inner_join(ncrops) %>% 
   mutate(area = round(area/10000, 2))
   
-write_csv(out, "data/tabla_descriptivos_crops.csv")
+write_csv(tabla_descriptivos_crops, "data/tabla_descriptivos_crops.csv")
  
 
 

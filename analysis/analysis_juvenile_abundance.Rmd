@@ -1,5 +1,5 @@
 ---
-title: "Model Juvenile Abundance"
+title: "Modelization of Juvenile Abundance"
 output: 
   html_document
 editor_options: 
@@ -32,7 +32,7 @@ library("MuMIn")
 library("broom")
 ```
 
-## Prepare Data 
+## Prepare Data 
 
 ```{r, readData}
 data <- read_csv(here::here("data/tree_data_crops.csv")) %>%
@@ -84,7 +84,7 @@ qp <- df %>%
 - First we modelized a Negative Binomial, because Poisson model is overdispersed 
 
 ```{r modelNB}
-nb <-MASS::glm.nb(ab ~ tipo*localidad, data = qp, link = "log")
+nb <- MASS::glm.nb(ab ~ tipo*localidad, data = qp, link = "log")
 ```
 
 - Check distribution of the data, using `performance::check_distribution`
@@ -97,11 +97,13 @@ performance::check_distribution(nb)
 ```{r}
 plot(performance::check_distribution(nb))
 ```
+- We select Tweedie distribution
 
-- We will model with Tweedie distribution, with $y \sim Tw_{\xi}(\mu, \phi)$
 
 ## Tweedie GLM
-- First we estimate $\xi$ using `tweedie::tweedie.profile` function.
+- We will model with Tweedie distribution, with $y \sim Tw_{\xi}(\mu, \phi)$
+
+- First we estimate the **variance power** ($\xi$) using `tweedie::tweedie.profile` function.
 
 ```{r}
 set.seed(1234)
@@ -119,7 +121,7 @@ t(t(c("MLE of xi" = out$xi.max, "lower CI 95%" = out$ci[1], "upper CI 95 %" = ou
 xi.est <- round(out$xi.max, 2)
 ```
 
-- Now, we modeled the Tweedie GLM using the estimate of the index parameter ($\xi = $ `r xi.est`) 
+- Now, we modeled the Tweedie GLM using the estimate of the index parameter ($\xi$ = `r xi.est`) 
 
 ```{r}
 m <- glm(ab ~ tipo*localidad, data = qp, family = tweedie(var.power = xi.est, link.power = 0))

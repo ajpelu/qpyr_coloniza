@@ -4,7 +4,8 @@ author: Pérez-Luque, A.J.; Zamora, R.; Bonet-García, F.J.
 output: 
   pdf_document:
       keep_tex: true
-bibliography: ../references.bib 
+bibliography: ../references.bib
+cls: ../ecology.csl
 ---
 
 ```{r setup, include=FALSE}
@@ -118,13 +119,10 @@ effect of the mortality agents.
 
 # Material and methods 
 
-## Study area 
-
-### Sampling description
-
+## Sampling description
 We sampled 5 abandonment croplands located at two Pyrenean oak forests in contrasting slopes of Sierra Nevada (southern Spain): "Robledal de San Juan" (SJ), a xeric site located at the northern aspect (37°7'29.63"N, 3°21'54.60"W; Güejar-Sierra, Granada, Spain); and "Robledal de Cáñar" (CA), a wetter site located at the southern aspect (37°57'28.04"N, 3°25'57.1"W; Cáñar, Granada) (Figure 1; Table 1). Each cropland was delimited using land-use and land-cover map of Andalusia for 1956 [@CMA2007MapaUsos] combined with a detailed photographic interpretation of the black and white 1956 orthophotos (1-m spatial resolution) [see @NavarroGonzalezetal2012CartografiaHistorica for more details]. The estimation of the age abandonment for each cropland were performed combining intrepretation of orthophotographies with information from local neighbors. We compiled all available aerial ortophotographies of the study areas from Fototeca Digital of the Spanish National Geographic Institute (http://fototeca.cnig.es/). The approximate abandonment age for each cropland was estimated by comparing the sequence of orthophotographs. These dates were accurated using information about past land-use, compiled from local neighbours [by local workshops and interviews with retired elder: farmers, shepherds and loggers; see details in @MorenoLlorcaetal2014CaracterizacionFuentes; @MorenoLlorcaetal2016HistoricalAnalysis]. The estimated rank of ages could be considered accurate (see Table 1). 
 
-For each abandonment cropland linear vegetation transects (30 m x 10 m) were randomly distributed in the old field; at the forest edges; and inside the surrounding forests (Figure 2). The numbers of transect within the old fields and surrounding forests were proportional to abandonment cropland size (Table 1).
+For each abandonment cropland, linear vegetation transects (30 m x 10 m) were randomly distributed in the old field; at the forest edges; and inside the surrounding forests (Figure 2). The numbers of transect within the old fields and surrounding forests were proportional to abandonment cropland size (Table 1). Transects were sampled in autumn 2012.
 
 ```{r, echo=FALSE, eval=FALSE}
 # tab_descriptive_croplands <- descriptive_croplands %>% 
@@ -170,49 +168,75 @@ descriptive_croplands %>%
   column_spec(column = 3, width = "8em")
 ```
 
-A total of 83 vegetation transects were sampled in autumn 2012. In each vegetation transect all tree species were recorded, and tree height and diameter were measured. For each transect we computed the juvenile abundance as the number of individuals lower than 150 cm tall. We did not separate the generative and vegetative origins of young oaks, since it is difficult due to resprouting trait of this species. In addition to the juvenile abundance, we explored differences between several recruitment stages based on individual size [e.g. @Plieningeretal2010LargeScalePatterns]. We considered five size categories based in height (every 30 cm). All data were properly documented and published in an international repository [see @PerezLuqueetal2015DatasetMIGRAME for a detailed description of the dataset]. 
+In each vegetation transect all tree species were recorded, and tree height and diameter were measured. For each transect we computed the juvenile abundance as the number of individuals lower than 150 cm tall. We did not separate the generative and vegetative origins of young oaks, since it is difficult due to resprouting trait of this species. In addition to the juvenile abundance, we explored differences between several recruitment stages based on individual size [*e.g.* @Plieningeretal2010LargeScalePatterns]. We considered five size categories based in height (every 30 cm). All data were properly documented and published in an international repository [see @PerezLuqueetal2015DatasetMIGRAME for a detailed description of the dataset]. 
 
-#### Disperser community 
+## Disperser community 
 To explore the disperser community in our study sites, we used bird censuses carried out by the Sierra Nevada Global Change Observatory. This dataset contains bird censuses at different ecosystems types of Sierra Nevada since 2008 [for more details see @BareaAzconetal2012PasseriformesOtrasa; @PerezLuqueetal2016DatasetPasserine]. We only used data for the Eurasian jay (*Garrulus glandarius*), since it is the main disperser of *Q. pyrenaica* [@Gomez2003ImpactVertebrate]. As we are interested in the comparison of the Eurasian jay community between the two study sites, we computed the annual bird abundances (in terms of birds/10 ha) for each site during a 7-year period (2008-2013). For more details about bird censuses see @BareaAzconetal2012PasseriformesOtrasa and @ZamoraBareaAzcon2015LongTermChanges. 
 
 ## Data Analysis 
 
-We used the vegetation transects carried out inside the forest to analyze the structure of the seed source (mature forest). We computed several parameters related to forests' structure and functioning: tree density, juvenile abundance, tree species composition, tree size related statistics (*i.e.* mean, median, maximum, 75 and 90 percentiles of tree-height), and basal area (BA). Differences between sites were assessed using the non-parametric Mann–Whitney U-test, since data does not met normality and/or homocedasticity assumptions. We also compared whether there was variation within transects belong to the same locality. Comparison of the bird disperser abundance (*G. glandarius*) were performed using ANOVA analyses, to explore differences between sites and along time. 
+We used the vegetation transects carried out inside the forest (habitat type = FOREST) to analyze the structure of the seed source (mature forest). Several parameters related to forests' structure and functioning were computed: tree density, juvenile abundance, tree species composition, tree size related statistics (*i.e.* mean, median, maximum, 75 and 90 percentiles of tree-height), and basal area (BA). Differences between sites were assessed using the non-parametric Mann–Whitney U-test, since data does not met normality and/or homocedasticity assumptions. We also compared whether there was variation within transects belong to the same locality. ANOVA analysis were performed to explore differences of Bird disperser abundance (*G. glandarius*) between sites and across years. 
+
+The variation of the juvenile abundance between study sites, habitat type, and their interaction (site-habitat type), was analyzed using Generalized Linear Models with a Tweedie distribution with a log link (cita libro). Study sites and habitat type were the explanatory variables. Prior to the analysis, data exploration was applied following protocols described by @Zuuretal2010ProtocolData and @IenoZuur2015BeginnerGuide. As the dataset comprised count data, we initially used the Poisson and the Negative Binomial distribution. However, these models were overdispersed. A variance power parameter of 1.28 (1.20-1.40, 95% confidence interval) were used in the Tweedie GLM model. This parameter was estimated using the `tweedie.profile` function of the `tweedie`ciat R package (cita). Model comparison (univariate models) were carried out using the Akaike's information criterion (AIC) (Burnham and Anderson 2002). The model accuracy was tested by Nagelkerke's pseudo-R2 (Nagelkerke 1991), used as a measure of goodness of fit. The significance of the explanatory variables in the selected model was tested using the likelihood ratio tests (LRT). Wald z-tests and Tukey's HSD-corrected *post hoc* comparisons were used to test for differences in juvenile abundance among sites and habitat-type. 
+
+All statistical analyses were performed in R using ... 
+
+brglm v. 0.5–6 (Kosmidis 2007), lme4.0 v. 0.9999–2 (Bates et al. 2012), ggplot2 v. 0.9.0 (Wickham 2009), and multcomp v. 1.2–12 (Hothorn et al. 2008) for multiple comparisons–corrected P values.
 
 
-Sapling abundance were 
+## Results 
+
+A total of 83 vegetation transects were sampled in autumn 2012.
+
+No significant differences for forest attributes were found in forest between study sites (Table 2). *Q. pyrenaica* woodland of CA site showed higher tree density but smallest tree heights (mean, median and percentiles) than SJ site (Table 2). In addition, higher contribution of juvenile abundance was found for CA site, with also showed greater basal area than SJ site (Table 2).
+
+```{r}
+g <- data.frame(Variable = c("% of Q. pyrenaica", "Tree density (ind/ha)", "Juvenile abundance (ind/ha)", "Adult abundance (ind/ha)", 
+"Maximum tree height (m)", "Tree height mean (m)",  "Tree height median (m)",  "Tree height 75 percentile (m)", "Tree height 90 percentile (m)", "Basal Area (m2/ha)"))
+
+fs <- read_csv(here::here("data/forest_str_by_localidad.csv")) %>% 
+  dplyr::select(-c(alternative:conf.method)) %>% 
+  bind_cols(g) %>% 
+  dplyr::select(-parameter2, -variable, -method) %>% 
+  relocate(Variable) 
+
+fs %>% 
+  kbl(col.names = c("Variable",
+                    "Southern site (CA)",
+                    "Northern site (SJ)",
+                    "U statistic",
+                    "p value"), 
+       booktabs = T, linesep = "", 
+      align = "c", escape = FALSE, 
+      caption = "Forest attributes of northern (SJ) and southern (CA) sites. U Mann-Withney statistics with signifcance at 0.05 level. Mean and SE are shown") %>% 
+  kable_styling(latex_options = c("scale_down")) 
+
+# %>% 
+#   collapse_rows(columns = 1) %>% 
+#   add_header_above(c(" " = 1, "Cropland" = 2, " " = 2, "Number of transects" = 3)) %>% 
+#   column_spec(column = 3, width = "8em")
+
+```
+
+Abundance of *Garrulus glandarius* was no different between study sites ($F_{1,82}$=2.387; p = 0.126; CA=1.69±0.21 and SJ = 1.33±0.22 birds/10ha), and no differences were found across years in the studied period (2008-2014) ($F_{6,82}$=1.234; p = 0.297). The interaction term was also no significant ($F_{6,82}$=1.26; p = 0.284)). 
+
+
+```{r, fig.height=5, fig.width=5, fig.cap="Juvenile abundance by sites and habitat-type. Mean and SE are shown. Asterisks indicate significant differences between study sites for each habitat type. For each study site, different letters indicate differences among habitat-type"}
+knitr::include_graphics(here::here("ms/juvenile_interaction.pdf"))
+```
 
 
 
 
 
-....
 
 
 
 
-
-
-Then, environmental variables and forest attributes were tested for differences among population groups previously identified. Normality and homoscedasticity were checked using the Shapiro–Wilk test and Levene’s test, respectively. If normality and homoscedasticity assumptions were satisfied, we performed ANOVA analysis followed by the Tukey LSD for testing statistical significance. Otherwise, Kruskal–Wallis ANOVA for nonparametric data were conducted followed by manual pairwise comparison using the Mann–Whitney U-test.
-
-Subsequently, we evaluated whether there were differences between the two localities using nonparametric tests. 
-
-Para cada una de esas varables realiamos 
-
-Posteriormente evaluamos si había diferencias entre las dos localidades mediante la utilización de test no paramétricos. Asimismo comparamos si existía variación dentro de una misma localidad. 
+--> menor competencia en CA 
 
 
 
 
-- Negative Binomial Mixed Models were applied to evaluate differences in sapling abundance between localities and habitat-type. 
-
-Prior to the analysis, data exploration were applied following a protocol described by Zuur et al. (2010) and Ieno and Zuur (2015) 
-
-As the dataset comprised count data, we initially used generalized linear mixed models (GLMM) with Poisson distribution. However, these models were overdispersed. Consequently, Negative Binomial GLMM models were applied: 
-
-
-
-
-
-
+Nagelkerke, N. J. (1991). A note on a general definition of the coefficient of determination. Biometrika, 78(3), 691-692.
 

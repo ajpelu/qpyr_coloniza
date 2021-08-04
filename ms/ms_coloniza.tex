@@ -43,6 +43,46 @@
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -264,11 +304,8 @@ mortality agents.
 \hypertarget{material-and-methods}{%
 \section{Material and methods}\label{material-and-methods}}
 
-\hypertarget{study-area}{%
-\subsection{Study area}\label{study-area}}
-
 \hypertarget{sampling-description}{%
-\subsubsection{Sampling description}\label{sampling-description}}
+\subsection{Sampling description}\label{sampling-description}}
 
 We sampled 5 abandonment croplands located at two Pyrenean oak forests
 in contrasting slopes of Sierra Nevada (southern Spain): ``Robledal de
@@ -293,11 +330,12 @@ shepherds and loggers; see details in Ricardo A. Moreno-Llorca et al.
 2014; R. A. Moreno-Llorca et al. 2016). The estimated rank of ages could
 be considered accurate (see Table 1).
 
-For each abandonment cropland linear vegetation transects (30 m x 10 m)
+For each abandonment cropland, linear vegetation transects (30 m x 10 m)
 were randomly distributed in the old field; at the forest edges; and
 inside the surrounding forests (Figure 2). The numbers of transect
 within the old fields and surrounding forests were proportional to
-abandonment cropland size (Table 1).
+abandonment cropland size (Table 1). Transects were sampled in autumn
+2012.
 
 \begin{table}
 
@@ -322,6 +360,166 @@ Site & Code & Abandonment Age (years) & Elevation (m) & Area (ha) & Cropland & E
 \bottomrule
 \end{tabular}}
 \end{table}
+
+In each vegetation transect all tree species were recorded, and tree
+height and diameter were measured. For each transect we computed the
+juvenile abundance as the number of individuals lower than 150 cm tall.
+We did not separate the generative and vegetative origins of young oaks,
+since it is difficult due to resprouting trait of this species. In
+addition to the juvenile abundance, we explored differences between
+several recruitment stages based on individual size (\emph{e.g.}
+\textbf{Plieningeretal2010LargeScalePatterns?}). We considered five size
+categories based in height (every 30 cm). All data were properly
+documented and published in an international repository (see
+\textbf{PerezLuqueetal2015DatasetMIGRAME?} for a detailed description of
+the dataset).
+
+\hypertarget{disperser-community}{%
+\subsection{Disperser community}\label{disperser-community}}
+
+To explore the disperser community in our study sites, we used bird
+censuses carried out by the Sierra Nevada Global Change Observatory.
+This dataset contains bird censuses at different ecosystems types of
+Sierra Nevada since 2008 (for more details see
+\textbf{BareaAzconetal2012PasseriformesOtrasa?};
+\textbf{PerezLuqueetal2016DatasetPasserine?}). We only used data for the
+Eurasian jay (\emph{Garrulus glandarius}), since it is the main
+disperser of \emph{Q. pyrenaica} (\textbf{Gomez2003ImpactVertebrate?}).
+As we are interested in the comparison of the Eurasian jay community
+between the two study sites, we computed the annual bird abundances (in
+terms of birds/10 ha) for each site during a 7-year period (2008-2013).
+For more details about bird censuses see
+(\textbf{BareaAzconetal2012PasseriformesOtrasa?}) and Zamora and
+Barea-Azc'on (2015).
+
+\hypertarget{data-analysis}{%
+\subsection{Data Analysis}\label{data-analysis}}
+
+We used the vegetation transects carried out inside the forest (habitat
+type = FOREST) to analyze the structure of the seed source (mature
+forest). Several parameters related to forests' structure and
+functioning were computed: tree density, juvenile abundance, tree
+species composition, tree size related statistics (\emph{i.e.} mean,
+median, maximum, 75 and 90 percentiles of tree-height), and basal area
+(BA). Differences between sites were assessed using the non-parametric
+Mann--Whitney U-test, since data does not met normality and/or
+homocedasticity assumptions. We also compared whether there was
+variation within transects belong to the same locality. ANOVA analysis
+were performed to explore differences of Bird disperser abundance
+(\emph{G. glandarius}) between sites and across years.
+
+The variation of the juvenile abundance between study sites, habitat
+type, and their interaction (site-habitat type), was analyzed using
+Generalized Linear Models with a Tweedie distribution with a log link
+(cita libro). Study sites and habitat type were the explanatory
+variables. Prior to the analysis, data exploration was applied following
+protocols described by (\textbf{Zuuretal2010ProtocolData?}) and
+(\textbf{IenoZuur2015BeginnerGuide?}). As the dataset comprised count
+data, we initially used the Poisson and the Negative Binomial
+distribution. However, these models were overdispersed. A variance power
+parameter of 1.28 (1.20-1.40, 95\% confidence interval) were used in the
+Tweedie GLM model. This parameter was estimated using the
+\texttt{tweedie.profile} function of the \texttt{tweedie}ciat R package
+(cita). Model comparison (univariate models) were carried out using the
+Akaike's information criterion (AIC) (Burnham and Anderson 2002). The
+model accuracy was tested by Nagelkerke's pseudo-R2 (Nagelkerke 1991),
+used as a measure of goodness of fit. The significance of the
+explanatory variables in the selected model was tested using the
+likelihood ratio tests (LRT). Wald z-tests and Tukey's HSD-corrected
+\emph{post hoc} comparisons were used to test for differences in
+juvenile abundance among sites and habitat-type.
+
+All statistical analyses were performed in R using \ldots{}
+
+brglm v. 0.5--6 (Kosmidis 2007), lme4.0 v. 0.9999--2 (Bates et
+al.~2012), ggplot2 v. 0.9.0 (Wickham 2009), and multcomp v. 1.2--12
+(Hothorn et al.~2008) for multiple comparisons--corrected P values.
+
+\#\#~Results
+
+A total of 83 vegetation transects were sampled in autumn 2012.
+
+No significant differences for forest attributes were found in forest
+between study sites (Table 2). \emph{Q. pyrenaica} woodland of CA site
+showed higher tree density but smallest tree heights (mean, median and
+percentiles) than SJ site (Table 2). In addition, higher contribution of
+juvenile abundance was found for CA site, with also showed greater basal
+area than SJ site (Table 2).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Variable =} \FunctionTok{c}\NormalTok{(}\StringTok{"\% of Q. pyrenaica"}\NormalTok{, }\StringTok{"Tree density (ind/ha)"}\NormalTok{, }\StringTok{"Juvenile abundance (ind/ha)"}\NormalTok{, }\StringTok{"Adult abundance (ind/ha)"}\NormalTok{, }
+\StringTok{"Maximum tree height (m)"}\NormalTok{, }\StringTok{"Tree height mean (m)"}\NormalTok{,  }\StringTok{"Tree height median (m)"}\NormalTok{,  }\StringTok{"Tree height 75 percentile (m)"}\NormalTok{, }\StringTok{"Tree height 90 percentile (m)"}\NormalTok{, }\StringTok{"Basal Area (m2/ha)"}\NormalTok{))}
+
+\NormalTok{fs }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data/forest\_str\_by\_localidad.csv"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(alternative}\SpecialCharTok{:}\NormalTok{conf.method)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{bind\_cols}\NormalTok{(g) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{parameter2, }\SpecialCharTok{{-}}\NormalTok{variable, }\SpecialCharTok{{-}}\NormalTok{method) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{relocate}\NormalTok{(Variable) }
+
+\NormalTok{fs }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{kbl}\NormalTok{(}\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Variable"}\NormalTok{,}
+                    \StringTok{"Southern site (CA)"}\NormalTok{,}
+                    \StringTok{"Northern site (SJ)"}\NormalTok{,}
+                    \StringTok{"U statistic"}\NormalTok{,}
+                    \StringTok{"p value"}\NormalTok{), }
+       \AttributeTok{booktabs =}\NormalTok{ T, }\AttributeTok{linesep =} \StringTok{""}\NormalTok{, }
+      \AttributeTok{align =} \StringTok{"c"}\NormalTok{, }\AttributeTok{escape =} \ConstantTok{FALSE}\NormalTok{, }
+      \AttributeTok{caption =} \StringTok{"Forest attributes of northern (SJ) and southern (CA) sites. U Mann{-}Withney statistics with signifcance at 0.05 level. Mean and SE are shown"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"scale\_down"}\NormalTok{)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-2}Forest attributes of northern (SJ) and southern (CA) sites. U Mann-Withney statistics with signifcance at 0.05 level. Mean and SE are shown}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{ccccc}
+\toprule
+Variable & Southern site (CA) & Northern site (SJ) & U statistic & p value\\
+\midrule
+% of Q. pyrenaica & 96.11 ± 1.28 & 100 ± 0 & 3.688880 & 0.0001540\\
+Tree density (ind/ha) & 1671.11 ± 229.21 & 1587.5 ± 161.67 & 4.808111 & 0.9369620\\
+Juvenile abundance (ind/ha) & 1004.44 ± 195.72 & 883.33 ± 127.18 & 4.852030 & 0.7667391\\
+Adult abundance (ind/ha) & 584.44 ± 80.47 & 704.17 ± 63.31 & 4.448516 & 0.1780814\\
+Maximum tree height (m) & 13.93 ± 0.65 & 13.75 ± 0.71 & 4.824306 & 0.8736194\\
+Tree height mean (m) & 4.32 ± 0.6 & 5.09 ± 0.37 & 4.330733 & 0.0855255\\
+Tree height median (m) & 3.19 ± 0.83 & 3.57 ± 0.66 & 4.564348 & 0.3527368\\
+Tree height 75 percentile (m) & 5.73 ± 1.02 & 8.29 ± 0.6 & 4.343805 & 0.0922400\\
+Tree height 90 percentile (m) & 10.07 ± 0.95 & 11.22 ± 0.54 & 4.605170 & 0.4399915\\
+Basal Area (m2/ha) & 37.56 ± 4.23 & 33.58 ± 3.6 & 4.912655 & 0.5400805\\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# \%\textgreater{}\% }
+\CommentTok{\#   collapse\_rows(columns = 1) \%\textgreater{}\% }
+\CommentTok{\#   add\_header\_above(c(" " = 1, "Cropland" = 2, " " = 2, "Number of transects" = 3)) \%\textgreater{}\% }
+\CommentTok{\#   column\_spec(column = 3, width = "8em")}
+\end{Highlighting}
+\end{Shaded}
+
+Abundance of \emph{Garrulus glandarius} was no different between study
+sites (\(F_{1,82}\)=2.387; p = 0.126; CA=1.69±0.21 and SJ = 1.33±0.22
+birds/10ha), and no differences were found across years in the studied
+period (2008-2014) (\(F_{6,82}\)=1.234; p = 0.297). The interaction term
+was also no significant (\(F_{6,82}\)=1.26; p = 0.284)).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{include\_graphics}\NormalTok{(here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"ms/juvenile\_interaction.pdf"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{/Users/ajpelu/Google Drive/_phd/03_colonization/qpyr_coloniza/ms/juvenile_interaction.pdf}
+
+--\textgreater{} menor competencia en CA
+
+Nagelkerke, N. J. (1991). A note on a general definition of the
+coefficient of determination. Biometrika, 78(3), 691-692.
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
@@ -368,6 +566,12 @@ Valbuena-Carabaña, M., U. L. de Heredia, P. Fuentes-Utrilla, I.
 Gonz'alez-Doncel, and L. Gil. 2010. {``Historical and Recent Changes in
 the {Spanish} Forests: A Socio-Economic Process.''} \emph{Review of
 Palaeobotany and Palynology} 162 (3): 492--506.
+
+\leavevmode\hypertarget{ref-ZamoraBareaAzcon2015LongTermChanges}{}%
+Zamora, Regino, and Jos'e Miguel Barea-Azc'on. 2015. {``Long-{Term
+Changes} in {Mountain Passerine Bird Communities} in the {Sierra Nevada}
+({Southern Spain}): {A} 30-{Year Case Study}.''} \emph{Ardeola} 62 (1):
+3--18. \url{https://doi.org/10.13157/arla.62.1.2015.3}.
 
 \end{CSLReferences}
 

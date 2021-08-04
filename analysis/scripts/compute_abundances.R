@@ -12,9 +12,9 @@ tree_data_crops <- read_csv("data/tree_data_crops.csv") %>%
 abundance_tree_class <- tree_data_crops %>% 
   group_by(tree_class, nombre, especie, localidad, crop_code, tipo) %>% 
   count() %>% 
-  mutate(n = n/3)
+  mutate(n = n/3) 
 
-write_csv("data/abundance_tree_class.csv")
+write_csv(abundance_tree_class, "data/abundance_tree_class.csv")
 
 # abundance by size (30, 60, ...) 
 abundanbce_size_class <- tree_data_crops %>% 
@@ -22,6 +22,6 @@ abundanbce_size_class <- tree_data_crops %>%
   count() %>% 
   mutate(n = n/3)
 
-write_csv("data/abundance_size_class.csv")
+write_csv(abundanbce_size_class, "data/abundance_size_class.csv")
 
 
