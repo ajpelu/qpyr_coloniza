@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Model Juvenile Abundance</title>
+
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">qpyr_coloniza</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Model Juvenile Abundance</h1>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2021-08-04
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>qpyr_coloniza/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20210804code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20210804)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20210804code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20210804)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreeaffd1e5c9869ae28210ac58c2f5dde72cd91cecctargetblankaffd1e5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/qpyr_coloniza/tree/affd1e5c9869ae28210ac58c2f5dde72cd91cecc" target="_blank">affd1e5</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluqpyrcolonizatreeaffd1e5c9869ae28210ac58c2f5dde72cd91cecctargetblankaffd1e5a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/qpyr_coloniza/tree/affd1e5c9869ae28210ac58c2f5dde72cd91cecc" target="_blank">affd1e5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .RData
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    images/
+
+Untracked files:
+    Untracked:  analysis/HighstatLibV6.R
+    Untracked:  analysis/figura_size_category.Rmd
+    Untracked:  data/tabla_descriptivos_crops.csv
+    Untracked:  ecology.csl
+    Untracked:  glmulti.analysis.modgen.back
+    Untracked:  glmulti.analysis.mods.back
+    Untracked:  ms/.DS_Store
+    Untracked:  ms/plot_tree_category.pdf
+    Untracked:  ms/table_anova.csv
+    Untracked:  ms/table_means.csv
+    Untracked:  ms/table_model_selection.csv
+
+Unstaged changes:
+    Deleted:    analysis/analysis_Arrendajo.md
+    Deleted:    analysis/analysis_Arrendajo_files/figure-gfm/coloniza-garrulus-1.pdf
+    Deleted:    analysis/analysis_Arrendajo_files/figure-gfm/coloniza-garrulus-1.png
+    Deleted:    analysis/analysis_Arrendajo_files/figure-gfm/coloniza-garrulus-1.svg
+    Deleted:    analysis/analysis_Arrendajo_files/figure-gfm/coloniza-garrulus-1.tiff
+    Deleted:    analysis/analysis_Arrendajo_files/figure-gfm/unnamed-chunk-6-1.png
+    Deleted:    analysis/compare_forest_structure.html
+    Deleted:    analysis/compare_forest_structure.md
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-10-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-11-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-12-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-13-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-14-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-5-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-6-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-7-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-8-1.png
+    Deleted:    analysis/compare_forest_structure_files/figure-gfm/unnamed-chunk-9-1.png
+    Modified:   analysis/generaTabla_descriptivos_crops.R
+    Modified:   data/forest_str_by_crop_code.csv
+    Modified:   ms/ms_coloniza.Rmd
+    Modified:   ms/ms_coloniza.pdf
+    Modified:   ms/ms_coloniza.tex
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/analysis_juvenile_abundance.Rmd</code>) and HTML (<code>docs/analysis_juvenile_abundance.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/qpyr_coloniza/blob/affd1e5c9869ae28210ac58c2f5dde72cd91cecc/analysis/analysis_juvenile_abundance.Rmd" target="_blank">affd1e5</a>
+</td>
+<td>
+Antonio J Perez-Luque
+</td>
+<td>
+2021-08-04
+</td>
+<td>
+init
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(&quot;tidyverse&quot;)
+library(&quot;here&quot;)
+library(&quot;knitr&quot;)
+library(&quot;kableExtra&quot;)
+library(&quot;plotrix&quot;) #std.error 
+library(&quot;rcompanion&quot;)
+library(&quot;statmod&quot;)
+library(&quot;tweedie&quot;)
+# load functions from Zuur et al (2009) 
+source(here::here(&quot;analysis/HighstatLibV6.R&quot;))
+
+# https://stackoverflow.com/questions/49836521/trouble-installing-glmmadmb-in-r
+library(&#39;glmmADMB&#39;) # See Zuur et al. 2013. p146 
+library(&#39;lattice&#39;)
+library(&#39;MASS&#39;) #for negative binomial
+library(&quot;performance&quot;)
+library(&quot;DHARMa&quot;)
+library(&quot;MuMIn&quot;)
+library(&quot;broom&quot;)</code></pre>
+<p>## Prepare Data</p>
+<pre class="r"><code>data &lt;- read_csv(here::here(&quot;data/tree_data_crops.csv&quot;)) %&gt;%
+  mutate(sp = case_when(
+    especie == &quot;roble&quot; ~ &quot;qp&quot;,
+    especie == &quot;encina&quot; ~ &quot;qi&quot;,
+    especie == &quot;pino&quot; ~ &quot;pi&quot;
+  ))
+
+# Add data of the transects selected
+transectos &lt;- read_csv(here::here(&quot;data/transectos_crops.csv&quot;))
+
+info_transectos &lt;- transectos %&gt;%
+  dplyr::select(nombre, tipo, localidad, crop_code, altitud)
+
+juvenile_abundance &lt;- data %&gt;%
+  group_by(sp, nombre) %&gt;%
+  count() %&gt;%
+  pivot_wider(names_from = sp, values_from = n, names_prefix = &quot;juv_&quot;) %&gt;%
+  rowwise() %&gt;%
+  mutate(
+    ntotal = sum(juv_qp, juv_qi, juv_pi, na.rm = TRUE),
+    nquercus = sum(juv_qp, juv_qi, na.rm = TRUE),
+    juvenile_ab = round(ntotal * 100 / 300, 2),
+    juvenileQuer_ab = round(nquercus * 100 / 300, 2),
+    juvenileQp_ab = round(juv_qp * 100 / 300, 2)
+  )
+
+df &lt;- info_transectos %&gt;%
+  left_join(juvenile_abundance) %&gt;%
+  mutate_all(~ replace_na(., 0))
+
+
+qp &lt;- df %&gt;%
+  dplyr::select(nombre, tipo, localidad, altitud, crop_code, ab = juvenileQp_ab) %&gt;%
+  mutate(
+    nombre = as.factor(nombre),
+    tipo = as.factor(tipo),
+    localidad = as.factor(localidad),
+    crop_code = as.factor(crop_code)
+  )</code></pre>
+<div id="modelization" class="section level1">
+<h1>Modelization</h1>
+<ul>
+<li><p>Negative binomial, Poisson or Tweedie.</p></li>
+<li><p>First we modelized a Negative Binomial, because Poisson model is overdispersed</p></li>
+</ul>
+<pre class="r"><code>nb &lt;-MASS::glm.nb(ab ~ tipo*localidad, data = qp, link = &quot;log&quot;)</code></pre>
+<ul>
+<li>Check distribution of the data, using <code>performance::check_distribution</code></li>
+</ul>
+<pre class="r"><code>performance::check_distribution(nb)</code></pre>
+<pre><code># Distribution of Model Family
+
+Predicted Distribution of Residuals
+
+ Distribution Probability
+       normal         62%
+      tweedie         28%
+         beta          3%
+
+Predicted Distribution of Response
+
+               Distribution Probability
+                    tweedie         78%
+ neg. binomial (zero-infl.)         12%
+                       beta          3%</code></pre>
+<pre class="r"><code>plot(performance::check_distribution(nb))</code></pre>
+<p><img src="figure/analysis_juvenile_abundance.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>We will model with Tweedie distribution, with <span class="math inline">\(y \sim Tw_{\xi}(\mu, \phi)\)</span></li>
+</ul>
+<div id="tweedie-glm" class="section level2">
+<h2>Tweedie GLM</h2>
+<ul>
+<li>First we estimate <span class="math inline">\(\xi\)</span> using <code>tweedie::tweedie.profile</code> function.</li>
+</ul>
+<pre class="r"><code>set.seed(1234)
+# xi parameter 
+out &lt;- tweedie.profile(ab ~ tipo*altitud, data = qp, 
+                       do.plot = TRUE,
+                       xi.vec = seq(1.05, 1.8, by= 0.05))</code></pre>
+<pre><code>1.05 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.55 1.6 1.65 1.7 1.75 1.8 
+................Done.</code></pre>
+<p><img src="figure/analysis_juvenile_abundance.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>t(t(c(&quot;MLE of xi&quot; = out$xi.max, &quot;lower CI 95%&quot; = out$ci[1], &quot;upper CI 95 %&quot; = out$ci[2]))) %&gt;% as.data.frame() %&gt;% rename(&quot;Maximum Likelihood Estimation&quot; = V1)</code></pre>
+<pre><code>              Maximum Likelihood Estimation
+MLE of xi                          1.279592
+lower CI 95%                       1.198398
+upper CI 95 %                      1.398987</code></pre>
+<pre class="r"><code>xi.est &lt;- round(out$xi.max, 2)</code></pre>
+<ul>
+<li>Now, we modeled the Tweedie GLM using the estimate of the index parameter ($= $ 1.28)</li>
+</ul>
+<pre class="r"><code>m &lt;- glm(ab ~ tipo*localidad, data = qp, family = tweedie(var.power = xi.est, link.power = 0))</code></pre>
+<ul>
+<li>Check model diagnostics</li>
+</ul>
+<pre class="r"><code>performance::check_model(m)</code></pre>
+<p><img src="figure/analysis_juvenile_abundance.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="model-selection" class="section level3">
+<h3>Model selection</h3>
+<pre class="r"><code>library(performance)
+mfull &lt;- glm(ab ~ tipo*localidad, data = qp, family = tweedie(var.power = xi.est, link.power = 0))
+mtl &lt;- glm(ab ~ tipo + localidad, data = qp, family = tweedie(var.power = xi.est, link.power = 0))
+mt &lt;- glm(ab ~ tipo, data = qp, family = tweedie(var.power = xi.est, link.power = 0))
+ml &lt;- glm(ab ~ localidad, data = qp, family = tweedie(var.power = xi.est, link.power = 0))
+mnull &lt;- glm(ab ~ 1, data = qp, family = tweedie(var.power = xi.est, link.power = 0))
+
+r2 &lt;- function(mimodelo){round(((mimodelo$null.deviance - mimodelo$deviance) / mimodelo$null.deviance),3)}
+
+models_selection &lt;- 
+model.sel(mfull, mtl, mt, ml, mnull, rank = AICtweedie) %&gt;% as.data.frame() %&gt;% 
+    mutate(model.name = c(
+      &quot;~ habitat type + site + habitat type:site&quot;, 
+      &quot;~ habitat type + site&quot;, 
+      &quot;~ habitat type&quot;, 
+      &quot;~ site&quot;,
+      &quot;null model&quot;), 
+           f = c(mfull$formula, mtl$formula, mt$formula, ml$formula, mnull$formula), 
+           r2nagelkerke = round(
+             c(r2_nagelkerke(mfull), r2_nagelkerke(mtl), r2_nagelkerke(mt), r2_nagelkerke(ml),r2_nagelkerke(mnull)),3),
+           r2 = round(
+             c(r2(mfull), r2(mtl), r2(mt), r2(ml), r2(mnull)),3),
+           logLiktweedie = c(logLiktweedie(mfull),
+                             logLiktweedie(mtl),
+                             logLiktweedie(mt),
+                             logLiktweedie(ml),
+                             logLiktweedie(mnull)
+                             )) %&gt;% 
+  dplyr::select(-f, -localidad, -tipo, -`localidad:tipo`, -family,-`(Intercept)`, -logLik, -weight) %&gt;% 
+  relocate(model.name, df, logLiktweedie) 
+
+write.table(models_selection, 
+            here::here(&quot;ms/table_model_selection.csv&quot;))</code></pre>
+<pre class="r"><code>options(knitr.kable.NA = &#39;&#39;) # suppress showing NA values in table
+kable(models_selection, format = &quot;html&quot;,  
+      digits = c(0, 0, 2, 2, 2, 3,3), align = &quot;rrrrrrr&quot;, row.names = FALSE)  %&gt;%
+  kable_styling(position = &quot;left&quot;)</code></pre>
+<table class="table" style>
+<thead>
+<tr>
+<th style="text-align:right;">
+model.name
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLiktweedie
+</th>
+<th style="text-align:right;">
+AICtweedie
+</th>
+<th style="text-align:right;">
+delta
+</th>
+<th style="text-align:right;">
+r2nagelkerke
+</th>
+<th style="text-align:right;">
+r2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+~ habitat type + site + habitat type:site
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+-221.89
+</td>
+<td style="text-align:right;">
+457.78
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.970
+</td>
+<td style="text-align:right;">
+0.678
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+~ habitat type + site
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-231.83
+</td>
+<td style="text-align:right;">
+473.66
+</td>
+<td style="text-align:right;">
+15.88
+</td>
+<td style="text-align:right;">
+0.955
+</td>
+<td style="text-align:right;">
+0.610
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+~ habitat type
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-236.21
+</td>
+<td style="text-align:right;">
+480.42
+</td>
+<td style="text-align:right;">
+22.64
+</td>
+<td style="text-align:right;">
+0.946
+</td>
+<td style="text-align:right;">
+0.578
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+~ site
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+-291.06
+</td>
+<td style="text-align:right;">
+588.12
+</td>
+<td style="text-align:right;">
+130.34
+</td>
+<td style="text-align:right;">
+0.116
+</td>
+<td style="text-align:right;">
+0.025
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+null model
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+-293.10
+</td>
+<td style="text-align:right;">
+590.19
+</td>
+<td style="text-align:right;">
+132.41
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="anova-table" class="section level3">
+<h3>Anova table</h3>
+<pre class="r"><code>library(car)
+library(kableExtra)
+a &lt;- Anova(mfull, test=&quot;F&quot;) %&gt;% as.data.frame()
+names(a) &lt;- c(&quot;SS&quot;, &quot;df&quot;, &quot;F&quot;, &quot;p-value&quot;)
+
+write.table(a, here::here(&quot;ms/table_anova.csv&quot;))</code></pre>
+<pre class="r"><code>options(knitr.kable.NA = &#39;&#39;) # suppress showing NA values in table
+kable(a, format = &quot;html&quot;,  
+      digits = c(3, 0, 2, 4), align = &quot;rrrr&quot;)  %&gt;%
+  kable_styling(position = &quot;left&quot;)</code></pre>
+<table class="table" style>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+SS
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+F
+</th>
+<th style="text-align:right;">
+p-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+tipo
+</td>
+<td style="text-align:right;">
+233.892
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+72.95
+</td>
+<td style="text-align:right;">
+0.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+localidad
+</td>
+<td style="text-align:right;">
+13.090
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+8.17
+</td>
+<td style="text-align:right;">
+0.0055
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tipo:localidad
+</td>
+<td style="text-align:right;">
+27.197
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+8.48
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Residuals
+</td>
+<td style="text-align:right;">
+123.432
+</td>
+<td style="text-align:right;">
+77
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Report</li>
+</ul>
+<pre class="r"><code>library(&quot;report&quot;)
+report(mfull)</code></pre>
+<pre><code>We fitted a general linear model (Tweedie family with a mu^0 link) (estimated using ML) to predict ab with tipo and localidad (formula: ab ~ tipo * localidad). The model&#39;s explanatory power is substantial (Nagelkerke&#39;s R2 = 0.97). The model&#39;s intercept, corresponding to tipo = CLARO and localidad = CANAR, is at 1.40 (95% CI [1.04, 1.74], p &lt; .001). Within this model:
+
+  - The effect of tipo [CLARO_BORDE] is statistically significant and positive (beta = 1.36, 95% CI [0.90, 1.83], p &lt; .001; Std. beta = 1.36, 95% CI [0.90, 1.83])
+  - The effect of tipo [ROBLEDAL] is statistically significant and positive (beta = 1.37, 95% CI [0.94, 1.80], p &lt; .001; Std. beta = 1.37, 95% CI [0.94, 1.80])
+  - The effect of localidad [SANJUAN] is statistically significant and negative (beta = -1.51, 95% CI [-2.22, -0.84], p &lt; .001; Std. beta = -1.51, 95% CI [-2.22, -0.84])
+  - The interaction effect of localidad [SANJUAN] on tipo [CLARO_BORDE] is statistically significant and positive (beta = 0.91, 95% CI [0.03, 1.80], p &lt; .05; Std. beta = 0.91, 95% CI [0.03, 1.80])
+  - The interaction effect of localidad [SANJUAN] on tipo [ROBLEDAL] is statistically significant and positive (beta = 1.51, 95% CI [0.76, 2.29], p &lt; .001; Std. beta = 1.51, 95% CI [0.76, 2.29])
+
+Standardized parameters were obtained by fitting the model on a standardized version of the dataset. 95% Confidence Intervals (CIs) and p-values were computed using </code></pre>
+<pre class="r"><code>report_performance(mfull)</code></pre>
+<pre><code>The model&#39;s explanatory power is substantial (Nagelkerke&#39;s R2 = 0.97)</code></pre>
+<pre class="r"><code>report_statistics(mfull)</code></pre>
+<pre><code>beta = 1.40, 95% CI [1.04, 1.74], p &lt; .001; Std. beta = 1.40, 95% CI [1.04, 1.74]
+beta = 1.36, 95% CI [0.90, 1.83], p &lt; .001; Std. beta = 1.36, 95% CI [0.90, 1.83]
+beta = 1.37, 95% CI [0.94, 1.80], p &lt; .001; Std. beta = 1.37, 95% CI [0.94, 1.80]
+beta = -1.51, 95% CI [-2.22, -0.84], p &lt; .001; Std. beta = -1.51, 95% CI [-2.22, -0.84]
+beta = 0.91, 95% CI [0.03, 1.80], p &lt; .05; Std. beta = 0.91, 95% CI [0.03, 1.80]
+beta = 1.51, 95% CI [0.76, 2.29], p &lt; .001; Std. beta = 1.51, 95% CI [0.76, 2.29]</code></pre>
+</div>
+<div id="plot" class="section level3">
+<h3>Plot</h3>
+<pre class="r"><code>library(ggpubr)
+library(broom)
+library(plotrix)
+library(rcompanion)
+library(multcompView)
+library(multcomp)
+library(ggrepel)
+
+ab_mean &lt;- qp %&gt;% 
+  group_by(localidad, tipo) %&gt;% 
+  summarise(
+    mean = mean(ab, na.rm = TRUE),
+    sd = sd(ab, na.rm = TRUE),
+    se = plotrix::std.error(ab, na.rm = TRUE)
+  ) 
+
+ab_boot &lt;- groupwiseMean(ab ~ localidad + tipo,
+              data = qp,
+              conf = 0.95,
+              digits = 3,
+              R   = 10000,
+              boot        = TRUE,
+              traditional = FALSE,
+              normal      = FALSE,
+              basic       = FALSE,
+              percentile  = FALSE,
+              bca         = TRUE) %&gt;% 
+  mutate(site = 
+           case_when(localidad == &quot;CANAR&quot; ~ &quot;CA&quot;, 
+                     TRUE ~ &quot;SJ&quot;),
+         type = 
+           case_when(tipo == &quot;CLARO&quot; ~ &quot;Cropland&quot;, 
+                     tipo == &quot;CLARO_BORDE&quot; ~ &quot;Edge&quot;,
+                     TRUE ~ &quot;Forest&quot;)) %&gt;% 
+  inner_join((qp %&gt;% group_by(localidad, tipo) %&gt;% 
+  summarise(se = round(plotrix::std.error(ab, na.rm = TRUE),2)))) %&gt;% 
+  relocate(localidad:Mean, se) %&gt;% ungroup() %&gt;% as.data.frame()
+
+## Add letters 
+
+### Compare bewteen sites by type
+library(lsmeans)
+
+letter_type &lt;- 
+  cld(lsmeans(mfull, ~ tipo|localidad),
+    level = .95,
+    Letters=letters,      ### Use lower-case letters for .group
+    adjust=&quot;tukey&quot;,        ### Tukey-adjusted comparisons 
+) %&gt;% data.frame()
+
+ab_boot &lt;- ab_boot %&gt;% inner_join(letter_type) %&gt;% 
+  rename(letra = `.group`)
+
+l_site &lt;- ab_boot %&gt;% group_by(type) %&gt;% 
+  summarise(y = mean(Mean)) %&gt;% 
+  mutate(dif = 
+           case_when(type == &quot;Cropland&quot; ~ &quot;***&quot;,
+                     type == &quot;Edge&quot; ~ &quot;***&quot;,
+                     type == &quot;Forest&quot; ~ &quot;&quot;))
+
+
+pd &lt;- position_dodge(.4)
+ab_interaction &lt;- 
+  ggplot(data=ab_boot, 
+         aes(x=site, y=Mean, shape=type, group=type)) +
+    geom_point(color=&#39;black&#39;, size=4, position=pd) +
+    geom_errorbar(aes(ymin=Bca.lower, ymax=Bca.upper), 
+                  color=&#39;black&#39;, width=.2, position=pd) +
+    geom_line(position=pd) +
+    xlab(&quot;site&quot;) + 
+  ylab(expression(paste(&quot;Juvenile abundance (ind/100 &quot;,m^2,&quot;)&quot;))) + 
+    theme_bw() +
+    guides(shape=guide_legend(title=&quot;&quot;)) + 
+  theme(panel.grid = element_blank()) + 
+  geom_text_repel(nudge_x = 0.2,
+                  nudge_y = 0.1,
+                  direction = &quot;both&quot;,
+                  aes(label=letra), 
+                  segment.color = NA) +
+  geom_text(data=l_site, aes(y=y, x=1.6, label=dif))+
+  theme(axis.title=element_text(size = rel(1.7)),
+          axis.text=element_text(size = rel(1.7)),
+          legend.title=element_text(size = rel(1.3)),
+          legend.text=element_text(size = rel(1.3)))</code></pre>
+<pre class="r"><code>write.table(ab_boot, here::here(&quot;ms/table_means.csv&quot;))</code></pre>
+<pre class="r"><code>print(ab_interaction)</code></pre>
+<p><img src="figure/analysis_juvenile_abundance.Rmd/ab-interaction-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(ab_interaction, filename = here::here(&quot;ms/juvenile_interaction.pdf&quot;))</code></pre>
+<ul>
+<li>post hocs</li>
+</ul>
+<pre class="r"><code>pairs(emmeans(mfull, c(&quot;tipo&quot;), by=&quot;localidad&quot;)) %&gt;% 
+  data.frame() %&gt;% 
+  kable(format = &quot;html&quot;,  
+      digits = c(0,0,3, 3, 0, 3, 4), align = &quot;rrrrrrr&quot;)  %&gt;%
+  kable_styling(position = &quot;left&quot;)</code></pre>
+<table class="table" style>
+<thead>
+<tr>
+<th style="text-align:right;">
+contrast
+</th>
+<th style="text-align:right;">
+localidad
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+z.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+CLARO - CLARO_BORDE
+</td>
+<td style="text-align:right;">
+CANAR
+</td>
+<td style="text-align:right;">
+-1.363
+</td>
+<td style="text-align:right;">
+0.238
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+-5.716
+</td>
+<td style="text-align:right;">
+0.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+CLARO - ROBLEDAL
+</td>
+<td style="text-align:right;">
+CANAR
+</td>
+<td style="text-align:right;">
+-1.365
+</td>
+<td style="text-align:right;">
+0.217
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+-6.292
+</td>
+<td style="text-align:right;">
+0.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+CLARO_BORDE - ROBLEDAL
+</td>
+<td style="text-align:right;">
+CANAR
+</td>
+<td style="text-align:right;">
+-0.002
+</td>
+<td style="text-align:right;">
+0.197
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+-0.012
+</td>
+<td style="text-align:right;">
+0.9999
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+CLARO - CLARO_BORDE
+</td>
+<td style="text-align:right;">
+SANJUAN
+</td>
+<td style="text-align:right;">
+-2.270
+</td>
+<td style="text-align:right;">
+0.384
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+-5.905
+</td>
+<td style="text-align:right;">
+0.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+CLARO - ROBLEDAL
+</td>
+<td style="text-align:right;">
+SANJUAN
+</td>
+<td style="text-align:right;">
+-2.878
+</td>
+<td style="text-align:right;">
+0.324
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+-8.881
+</td>
+<td style="text-align:right;">
+0.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+CLARO_BORDE - ROBLEDAL
+</td>
+<td style="text-align:right;">
+SANJUAN
+</td>
+<td style="text-align:right;">
+-0.608
+</td>
+<td style="text-align:right;">
+0.265
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+-2.296
+</td>
+<td style="text-align:right;">
+0.0563
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>pairs(emmeans(mfull, c(&quot;localidad&quot;), by=&quot;tipo&quot;)) %&gt;% data.frame() %&gt;% 
+    kable(format = &quot;html&quot;,  
+      digits = c(0,0,3, 3, 0, 3, 4), align = &quot;rrrrrrr&quot;)  %&gt;%
+  kable_styling(position = &quot;left&quot;)</code></pre>
+<table class="table" style>
+<thead>
+<tr>
+<th style="text-align:right;">
+contrast
+</th>
+<th style="text-align:right;">
+tipo
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+z.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+CANAR - SANJUAN
+</td>
+<td style="text-align:right;">
+CLARO
+</td>
+<td style="text-align:right;">
+1.511
+</td>
+<td style="text-align:right;">
+0.352
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+4.293
+</td>
+<td style="text-align:right;">
+0.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+CANAR - SANJUAN
+</td>
+<td style="text-align:right;">
+CLARO_BORDE
+</td>
+<td style="text-align:right;">
+0.604
+</td>
+<td style="text-align:right;">
+0.284
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+2.124
+</td>
+<td style="text-align:right;">
+0.0337
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+CANAR - SANJUAN
+</td>
+<td style="text-align:right;">
+ROBLEDAL
+</td>
+<td style="text-align:right;">
+-0.002
+</td>
+<td style="text-align:right;">
+0.168
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+-0.011
+</td>
+<td style="text-align:right;">
+0.9914
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.2 (2020-06-22)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.3
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] lsmeans_2.30-0     emmeans_1.5.4      ggrepel_0.9.1      multcomp_1.4-16   
+ [5] TH.data_1.0-10     survival_3.2-7     mvtnorm_1.1-1      multcompView_0.1-8
+ [9] ggpubr_0.4.0       report_0.3.0       car_3.0-10         carData_3.0-4     
+[13] broom_0.7.6        MuMIn_1.43.17      DHARMa_0.3.3.0     performance_0.7.2 
+[17] lattice_0.20-41    glmmADMB_0.8.3.3   MASS_7.3-53        tweedie_2.3.3     
+[21] statmod_1.4.36     rcompanion_2.3.27  plotrix_3.8-1      kableExtra_1.3.1  
+[25] knitr_1.31         here_1.0.1         forcats_0.5.1      stringr_1.4.0     
+[29] dplyr_1.0.6        purrr_0.3.4        readr_1.4.0        tidyr_1.1.3       
+[33] tibble_3.1.2       ggplot2_3.3.3      tidyverse_1.3.1    workflowr_1.6.2   
+
+loaded via a namespace (and not attached):
+  [1] readxl_1.3.1        backports_1.2.1     plyr_1.8.6         
+  [4] splines_4.0.2       digest_0.6.27       qqplotr_0.0.5      
+  [7] foreach_1.5.1       htmltools_0.5.1.1   fansi_0.4.2        
+ [10] magrittr_2.0.1      openxlsx_4.2.3      see_0.6.4          
+ [13] modelr_0.1.8        matrixStats_0.58.0  sandwich_3.0-0     
+ [16] colorspace_2.0-0    rvest_1.0.0         haven_2.3.1        
+ [19] xfun_0.23           crayon_1.4.1        jsonlite_1.7.2     
+ [22] libcoin_1.0-7       Exact_2.1           lme4_1.1-26        
+ [25] zoo_1.8-8           iterators_1.0.13    glue_1.4.2         
+ [28] gtable_0.3.0        R2admb_0.7.16.2     webshot_0.5.2      
+ [31] DEoptimR_1.0-8      abind_1.4-5         scales_1.1.1       
+ [34] DBI_1.1.1           rstatix_0.6.0       Rcpp_1.0.6         
+ [37] viridisLite_0.3.0   xtable_1.8-4        foreign_0.8-81     
+ [40] stats4_4.0.2        httr_1.4.2          modeltools_0.2-23  
+ [43] ellipsis_0.3.2      pkgconfig_2.0.3     farver_2.0.3       
+ [46] sass_0.3.1          dbplyr_2.1.1        utf8_1.1.4         
+ [49] tidyselect_1.1.0    labeling_0.4.2      rlang_0.4.10       
+ [52] later_1.1.0.1       effectsize_0.4.5    munsell_0.5.0      
+ [55] cellranger_1.1.0    tools_4.0.2         cli_2.5.0          
+ [58] generics_0.1.0      ggridges_0.5.3      evaluate_0.14      
+ [61] EMT_1.1             yaml_2.2.1          fs_1.5.0           
+ [64] zip_2.1.1           robustbase_0.93-7   randomForest_4.6-14
+ [67] coin_1.4-0          rootSolve_1.8.2.1   nlme_3.1-152       
+ [70] whisker_0.4         xml2_1.3.2          compiler_4.0.2     
+ [73] rstudioapi_0.13     curl_4.3            ggsignif_0.6.0     
+ [76] e1071_1.7-4         reprex_2.0.0        bslib_0.2.4        
+ [79] DescTools_0.99.40   stringi_1.5.3       highr_0.8          
+ [82] parameters_0.14.0   Matrix_1.3-2        nloptr_1.2.2.2     
+ [85] vctrs_0.3.8         pillar_1.6.1        lifecycle_1.0.0    
+ [88] lmtest_0.9-38       jquerylib_0.1.3     estimability_1.3   
+ [91] data.table_1.13.6   insight_0.14.1      lmom_2.8           
+ [94] httpuv_1.5.5        R6_2.5.0            promises_1.2.0.1   
+ [97] rio_0.5.16          gridExtra_2.3       gld_2.6.2          
+[100] codetools_0.2-18    boot_1.3-26         assertthat_0.2.1   
+[103] rprojroot_2.0.2     withr_2.4.1         nortest_1.0-4      
+[106] mgcv_1.8-33         bayestestR_0.9.0    expm_0.999-6       
+[109] parallel_4.0.2      hms_1.0.0           grid_4.0.2         
+[112] coda_0.19-4         class_7.3-18        minqa_1.2.4        
+[115] rmarkdown_2.8       git2r_0.28.0        lubridate_1.7.10   </code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
