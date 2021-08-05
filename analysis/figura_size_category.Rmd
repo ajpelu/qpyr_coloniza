@@ -17,6 +17,7 @@ library(knitr)
 library(plotrix)
 ```
 
+- Be carrefully and add transect with no data 
 ```{r}
 d <- read_csv(here::here("data/tree_data_crops.csv"))
 
@@ -27,6 +28,7 @@ df_roble <- d %>% filter(especie == "roble") %>%
     tipo == "CLARO_BORDE" ~ "Edge",
     tipo == "ROBLEDAL" ~ "Forest"
   ))
+
 ```
 
 # Plot by size category (only juveniles)
