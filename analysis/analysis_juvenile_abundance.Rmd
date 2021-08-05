@@ -31,6 +31,7 @@ library("DHARMa")
 library("MuMIn")
 library("broom")
 library("gtsummary")
+library("ggstatsplot")
 ```
 
 ## Prepare Data 
@@ -372,15 +373,107 @@ data.frame(multcomp::cld(
 ```
 
 
+# Explore correlation with age of crop abandoned
+
+```{r}
+ages <- read_csv("data/age_cultivos.csv")
+
+qptemp <- qp %>% 
+  filter(tipo == "CLARO") %>% inner_join(
+  ages %>% dplyr::select(crop_code, age)
+)
+
+micolor <- '#007EE3'
+
+ageplot <- ggscatter(data = qptemp, x="age", y="ab", 
+          color = micolor, shape=19, alpha = .8, 
+          add = "reg.line", 
+          add.params = 
+            list(color = micolor, fill = "lightgray"),
+          conf.int = TRUE, 
+          xlab = "Estimated age of crop abandonment",
+          ylab = expression(paste('Juvenile oak abundance (ind/100 ', m^2,')', sep=""))) +
+  stat_cor(method = "pearson", 
+             label.x = 25, label.y = 11,
+             p.accuracy = 0.001, r.accuracy = 0.01,
+             aes(label = paste(..rr.label.., ..p.label.., sep = "~`,`~"))) 
+```
+
+```{r, ageplot, dev=c('png', 'pdf', 'svg', 'tiff')}
+print(ageplot)
+```
+
+
+## Test non linear regressions (NLS)
+
+- $abundance \sim \exp(b\times age)$ 
+
+```{r}
+m.age1  <- nls(ab ~ exp(b*age), 
+    data = qptemp,
+    start = list(b = 0.03))
+summary(m.age1)
+
+# R nagelkerke 
+modelr::rsquare(m.age1, data = qptemp)
+```
+
+- $abundance \sim a \times \exp(b\times age)$ 
+
+```{r}
+m.age2  <- nls(ab ~ a*exp(b*age), 
+    data = qptemp,
+    start = list(a = 0.18, b = 0.05))
+
+summary(m.age2)
+
+# R nagelkerke 
+modelr::rsquare(m.age2, data = qptemp)
+```
+
+- $abundance \sim a + \exp(b\times age)$ 
+
+```{r}
+m.age3  <- nls(ab ~ a + exp(b*age), 
+    data = qptemp,
+    start = list(a = -1.7, b = 0.05))
+
+summary(m.age3)
+
+# R nagelkerke 
+modelr::rsquare(m.age3, data = qptemp)
+```
+
+### Compare NLS vs. LM
+
+```{r}
+ggplot(qptemp, aes(x=age, y=ab)) + 
+  geom_smooth(method = "nls", 
+              formula = y ~ a*exp(b*x), 
+              se = FALSE, colour = "green",
+              method.args = list(start = list(a= 0.18, b = 0.05))) +
+  geom_smooth(method = "nls", 
+              formula = y ~ a + exp(b*x), 
+              se = FALSE, colour = "red",
+              method.args = list(start = list(a = -1.72, b = 0.03))) +
+  geom_smooth(method = "nls", 
+              formula = y ~ exp(b*x), 
+              se = FALSE, colour = "blue",
+              method.args = list(start = list(b = 0.02))) + 
+  geom_point()  +
+   theme_bw() + 
+  theme(panel.grid = element_blank()) + 
+  geom_smooth(method = "lm", colour = "black")
+```
+
+
+
+
+
+
+
+
 
 
 
    
-
-
-
-
-
-
-
-
